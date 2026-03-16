@@ -1,0 +1,716 @@
+{
+  "products": [
+    {
+      "id": "497493941",
+      "name": "LONG TEXTURED PLEATED STRIPED DRESS",
+      "price": "$59.90",
+      "color": "Ecru / Brown",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/8119/faf6/bce44dc4a152/71f4a8a792d9/08779153086-p/08779153086-p.jpg?ts=1770832579767&w=563",
+      "productUrl": "https://www.zara.com/us/en/long-textured-pleated-striped-dress-p08779153.html",
+      "score": 100,
+      "matchReason": "Ecru / Brown \u2014 great palette match \u00b7 elegant movement \u00b7 nice fabric"
+    },
+    {
+      "id": "502479454",
+      "name": "BALLOON SLEEVE MIDI DRESS",
+      "price": "$89.90",
+      "color": "Oyster-white",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/e31b/2636/a2374e8d8de1/0e1799b999bc/02201957251-p/02201957251-p.jpg?ts=1770384930310&w=563",
+      "productUrl": "https://www.zara.com/us/en/balloon-sleeve-midi-dress-p02201957.html",
+      "score": 100,
+      "matchReason": "Oyster-white \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "503003489",
+      "name": "STRIPED BELTED MIDI DRESS",
+      "price": "$89.90",
+      "color": "Ecru / Maroon",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/8b78/82ad/aa854dd9a972/a99ec3e7d6d9/05029119068-p/05029119068-p.jpg?ts=1770917274426&w=563",
+      "productUrl": "https://www.zara.com/us/en/striped-belted-midi-dress-p05029119.html",
+      "score": 100,
+      "matchReason": "Ecru / Maroon \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "502154339",
+      "name": "COMBINED STRIPED BELTED MIDI DRESS",
+      "price": "$89.90",
+      "color": "Ecru / Black",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/36e6/0c40/a6ca4c2685b8/61b4e4261faa/03564084070-p/03564084070-p.jpg?ts=1771409137175&w=563",
+      "productUrl": "https://www.zara.com/us/en/belted-striped-combi-midi-dress-p03564084.html",
+      "score": 100,
+      "matchReason": "Ecru / Black \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "511356655",
+      "name": "ASYMMETRIC SLEEVE SATIN EFFECT MIDI DRESS",
+      "price": "$79.90",
+      "color": "Mid-camel",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/b3a6/b5dc/18864dd183eb/217b544a571d/02388748756-p/02388748756-p.jpg?ts=1771593430741&w=563",
+      "productUrl": "https://www.zara.com/us/en/asymmetric-sleeve-satin-effect-midi-dress-p02388748.html",
+      "score": 100,
+      "matchReason": "Mid-camel \u2014 great palette match \u00b7 ideal length/cut \u00b7 nice fabric"
+    },
+    {
+      "id": "502043235",
+      "name": "BELTED MIDI DRESS",
+      "price": "$79.90",
+      "color": "Beige",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/012e/ff69/f51c467b986f/fbd551eddf25/05029101710-p/05029101710-p.jpg?ts=1770811054036&w=563",
+      "productUrl": "https://www.zara.com/us/en/belted-midi-dress-p05029101.html",
+      "score": 100,
+      "matchReason": "Beige \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "504832225",
+      "name": "CROCHET SHORT DRESS",
+      "price": "$79.90",
+      "color": "Ecru",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/e2d3/3022/9a4d4944be51/d3331fe5c29f/08779170712-p/08779170712-p.jpg?ts=1773404177850&w=563",
+      "productUrl": "https://www.zara.com/us/en/short-crochet-dress-p08779170.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "498924308",
+      "name": "POLKA DOT MIDI DRESS",
+      "price": "$69.90",
+      "color": "Ecru / Maroon",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/ccc4/a512/b15f4cd8ab0a/5a2e4a22a0cf/04387032068-p/04387032068-p.jpg?ts=1770917267163&w=563",
+      "productUrl": "https://www.zara.com/us/en/polka-dot-midi-dress-p04387032.html",
+      "score": 100,
+      "matchReason": "Ecru / Maroon \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "504024429",
+      "name": "STRUCTURED KNIT BALLOON SKIRT",
+      "price": "$69.90",
+      "color": "Ecru",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/3780/a492/5ca04bbb8345/ba53c01b8e4c/04192073712-p/04192073712-p.jpg?ts=1773253786150&w=563",
+      "productUrl": "https://www.zara.com/us/en/structured-knit-balloon-skirt-p04192073.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition \u00b7 nice fabric"
+    },
+    {
+      "id": "501622819",
+      "name": "GINGHAM CHECK MIDI SKIRT",
+      "price": "$59.90",
+      "color": "Ecru / Black",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/bdcc/dc91/7d4746149916/43d1541fd528/05029063070-p/05029063070-p.jpg?ts=1771596241044&w=563",
+      "productUrl": "https://www.zara.com/us/en/gingham-midi-skirt-p05029063.html",
+      "score": 100,
+      "matchReason": "Ecru / Black \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "501638766",
+      "name": "BRAIDED BELT MIDI SKIRT",
+      "price": "$79.90",
+      "color": "Ecru",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/276d/fdbb/8e9c48cb96ea/565198ff5743/01971066712-p/01971066712-p.jpg?ts=1772444289449&w=563",
+      "productUrl": "https://www.zara.com/us/en/braided-belt-midi-skirt-p01971066.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "505756753",
+      "name": "LAYERED MIDI SKIRT",
+      "price": "$45.90",
+      "color": "Brown, Mauve",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/cb8e/a07d/568e419ba6c7/7f02f56dc063/04387079700-p/04387079700-p.jpg?ts=1773250083599&w=563",
+      "productUrl": "https://www.zara.com/us/en/layered-midi-skirt-p04387079.html",
+      "score": 100,
+      "matchReason": "Mauve \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "500532202",
+      "name": "RUSTIC CROCHET SKIRT",
+      "price": "$49.90",
+      "color": "Sand",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/c9b9/e045/c8a843a2a569/de2304754538/08779161711-p/08779161711-p.jpg?ts=1773136417068&w=563",
+      "productUrl": "https://www.zara.com/us/en/rustic-crochet-skirt-p08779161.html",
+      "score": 100,
+      "matchReason": "Sand \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "502146723",
+      "name": "CONTRASTING KNIT PENCIL SKIRT",
+      "price": "$59.90",
+      "color": "Ecru",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/d42d/d657/31a748ee8011/aea2212f6560/04192068712-p/04192068712-p.jpg?ts=1771593437442&w=563",
+      "productUrl": "https://www.zara.com/us/en/contrasting-knit-pencil-skirt-p04192068.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 ideal length/cut \u00b7 nice fabric"
+    },
+    {
+      "id": "502044687",
+      "name": "ASYMMETRIC HEM MIDI SKIRT",
+      "price": "$69.90",
+      "color": "Light camel",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/8dce/3860/81824774aa66/60bc0892274e/02298072743-p/02298072743-p.jpg?ts=1770285654049&w=563",
+      "productUrl": "https://www.zara.com/us/en/asymmetric-midi-skirt-p02298072.html",
+      "score": 100,
+      "matchReason": "Light camel \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "497108193",
+      "name": "SCARF VOLUME MIDI SKIRT",
+      "price": "$79.90",
+      "color": "Ecru",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/f0e5/6601/547942299bf8/a5ac071ae417/01255415712-p/01255415712-p.jpg?ts=1768232113663&w=563",
+      "productUrl": "https://www.zara.com/us/en/scarf-volume-midi-skirt-p01255415.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 ideal length/cut"
+    },
+    {
+      "id": "505079618",
+      "name": "ZW COLLECTION PLEATED WIDE LEG PANTS",
+      "price": "$79.90",
+      "color": "Pastel pink, Ecru",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/32d1/7826/edd6446888fc/5c4c263a4285/05247044621-p/05247044621-p.jpg?ts=1772191103952&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-pleated-wide-leg-pants-p05247044.html",
+      "score": 100,
+      "matchReason": "Pastel pink \u2014 great palette match \u00b7 flattering cut"
+    },
+    {
+      "id": "514996703",
+      "name": "100% LINEN STRAIGHT LEG PANTS",
+      "price": "$79.90",
+      "color": "Sand / Marl",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/fe25/cb58/836c49689d43/96dd9239dcd9/02600832081-p/02600832081-p.jpg?ts=1773413600486&w=563",
+      "productUrl": "https://www.zara.com/us/en/100-linen-straight-leg-pants-p02600832.html",
+      "score": 100,
+      "matchReason": "Sand / Marl \u2014 great palette match \u00b7 flattering cut \u00b7 nice fabric"
+    },
+    {
+      "id": "504049258",
+      "name": "HIGH-WAIST CULOTTES SET",
+      "price": "$49.90",
+      "color": "Mid-ecru",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/6f85/a115/afd94b4ea667/c13fcae4f6d2/08372097715-p/08372097715-p.jpg?ts=1772636279861&w=563",
+      "productUrl": "https://www.zara.com/us/en/high-waist-culottes-set-p08372097.html",
+      "score": 100,
+      "matchReason": "Mid-ecru \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "497716120",
+      "name": "HIGH-WAISTED PANTS",
+      "price": "$49.90",
+      "color": "Black, brown vigore",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/92cb/39a3/034e43caab14/cfdad59f549d/01608332800-p/01608332800-p.jpg?ts=1769620156066&w=563",
+      "productUrl": "https://www.zara.com/us/en/high-waisted-pants-p01478631.html",
+      "score": 100,
+      "matchReason": "Mid-ecru \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "495700942",
+      "name": "CONTRAST-WAIST STRAIGHT PANTS SET",
+      "price": "$59.90",
+      "color": "Sand",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/a976/19a0/9ba9442190c5/3a4465d39714/08316696711-p/08316696711-p.jpg?ts=1772642280283&w=563",
+      "productUrl": "https://www.zara.com/us/en/contrast-waist-straight-leg-pants-set-p08316696.html",
+      "score": 100,
+      "matchReason": "Sand \u2014 great palette match \u00b7 flattering cut"
+    },
+    {
+      "id": "498500639",
+      "name": "FLOWY STRAIGHT LEG PANTS SET",
+      "price": "$45.90",
+      "color": "Olive green, Ecru",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/3329/7a30/49b542bf9d5a/b26ab2ff8b04/04387023515-p/04387023515-p.jpg?ts=1772643406240&w=563",
+      "productUrl": "https://www.zara.com/us/en/flowy-straight-leg-pants-set-p04387023.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 flattering cut"
+    },
+    {
+      "id": "495686016",
+      "name": "TAILORED OPEN FRONT BLAZER",
+      "price": "$99.90",
+      "color": "Ecru",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/91b5/ebcb/bb21490b8132/478bab0b63c6/08531597712-p/08531597712-p.jpg?ts=1770190815403&w=563",
+      "productUrl": "https://www.zara.com/us/en/tailored-blazer-with-no-lapel-p08531597.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition"
+    },
+    {
+      "id": "514990687",
+      "name": "100% LINEN HERRINGBONE FITTED BLAZER SET",
+      "price": "$119.00",
+      "color": "Indigo",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/3acf/a5b3/ad5a4546b8e1/2f6a3b2d4aaa/02633808405-p/02633808405-p.jpg?ts=1773049722874&w=563",
+      "productUrl": "https://www.zara.com/us/en/fitted-herringbone-linen-blazer-set-p02633808.html",
+      "score": 100,
+      "matchReason": "Indigo \u2014 muted & cool toned \u00b7 structured piece adds definition \u00b7 nice fabric"
+    },
+    {
+      "id": "514996877",
+      "name": "100% LINEN SHOULDER PAD BLAZER SET",
+      "price": "$119.00",
+      "color": "Sand / Marl",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/f190/f6e3/45184153b1eb/6ab49b59089c/02601832081-p/02601832081-p.jpg?ts=1773413600065&w=563",
+      "productUrl": "https://www.zara.com/us/en/100-linen-shoulder-pad-blazer-set-p02601832.html",
+      "score": 100,
+      "matchReason": "Sand / Marl \u2014 great palette match \u00b7 structured piece adds definition \u00b7 nice fabric"
+    },
+    {
+      "id": "495672762",
+      "name": "OVERSIZED DOUBLE BREASTED BLAZER",
+      "price": "$79.90",
+      "color": "Black, Brown",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/2790/697e/5aee4c07932b/43a0e55fc204/02753122800-p/02753122800-p.jpg?ts=1767871786957&w=563",
+      "productUrl": "https://www.zara.com/us/en/oversized-double-breasted-blazer-p02753122.html",
+      "score": 100,
+      "matchReason": "Oyster-white \u2014 great palette match \u00b7 structured piece adds definition"
+    },
+    {
+      "id": "514961971",
+      "name": "ZW COLLECTION DOUBLE BREASTED BLAZER WITH SHOULDER PADS",
+      "price": "$179.00",
+      "color": "Ecru",
+      "category": "blazers",
+      "imageUrl": "",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-double-breasted-blazer-with-shoulder-pads-p02700776.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition"
+    },
+    {
+      "id": "509028343",
+      "name": "TUXEDO BLAZER SET",
+      "price": "$99.90",
+      "color": "Oyster-white",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/c6fc/6bd7/e7d54acb9eec/804e146e10a6/02438593251-p/02438593251-p.jpg?ts=1772624490923&w=563",
+      "productUrl": "https://www.zara.com/us/en/tuxedo-blazer-set-p02438593.html",
+      "score": 100,
+      "matchReason": "Oyster-white \u2014 great palette match \u00b7 structured piece adds definition"
+    },
+    {
+      "id": "512880031",
+      "name": "DOUBLE BREASTED LINEN BLAZER WITH ROLLED-UP SLEEVES",
+      "price": "$79.90",
+      "color": "Caramel, Navy blue",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/0b90/1173/e28d46deb974/40bcc0c4f278/02518759732-p/02518759732-p.jpg?ts=1772806138275&w=563",
+      "productUrl": "https://www.zara.com/us/en/linen-blend-double-breasted-blazer-with-rolled-sleeves-p02518759.html",
+      "score": 100,
+      "matchReason": "Caramel \u2014 muted & cool toned \u00b7 structured piece adds definition \u00b7 nice fabric"
+    },
+    {
+      "id": "513365501",
+      "name": "ZW COLLECTION LAPELLESS LONG BLAZER",
+      "price": "$179.00",
+      "color": "Light beige",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/ee5a/ab39/d50b4ee3998a/f16ffa5b45b2/05474058251-p/05474058251-p.jpg?ts=1772191107317&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-lapelless-long-blazer-p02600677.html",
+      "score": 100,
+      "matchReason": "Light beige \u2014 great palette match \u00b7 structured piece adds definition"
+    },
+    {
+      "id": "502146627",
+      "name": "COMBINATION KNIT BLOUSE",
+      "price": "$59.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/ff12/5aa5/562845818f1f/5d9ada7e5e46/04192067712-p/04192067712-p.jpg?ts=1771593437229&w=563",
+      "productUrl": "https://www.zara.com/us/en/combination-knit-blouse-p04192067.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "498900515",
+      "name": "ZW COLLECTION ROMANTIC LACE BLOUSE",
+      "price": "$79.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/9c98/98d3/75524a789e93/01d422690449/04786039712-p/04786039712-p.jpg?ts=1772191312991&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-romantic-lace-blouse-p04786039.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "499564779",
+      "name": "ZW COLLECTION CROCHET BLOUSE",
+      "price": "$59.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/27dc/ab9c/f1af4631988d/c3baa29e5ae5/04786023712-p/04786023712-p.jpg?ts=1773076326837&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-crochet-blouse-p04786023.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "498879013",
+      "name": "ZW COLLECTION LACE TRIM SLEEVELESS BLOUSE",
+      "price": "$69.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/edb0/870b/bb06479e84de/9983b747a57f/04786041712-p/04786041712-p.jpg?ts=1772470853569&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-sleeveless-lace-blouse-p04786041.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "502955586",
+      "name": "EMBROIDERED FLORAL BLOUSE",
+      "price": "$59.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/2956/a45f/826141cc9399/f2024b70dd52/08741055712-p/08741055712-p.jpg?ts=1772202984715&w=563",
+      "productUrl": "https://www.zara.com/us/en/embroidered-floral-blouse-p08741055.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "517569640",
+      "name": "ZW COLLECTION FLOWY WRAP BLOUSE",
+      "price": "$69.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/72fe/77d1/bbdf4ba2a094/e650e0c91eff/01102689712-060-p/video.mp4?ts=1772799640325",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-flowy-wrap-blouse-p01102689.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 defines waist beautifully"
+    },
+    {
+      "id": "502043326",
+      "name": "SATIN EFFECT BLOUSE WITH RUFFLES AND SHOULDER PADS",
+      "price": "$49.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/ad08/5eb2/d540410988a4/27d48589024f/03897074330-a3/03897074330-a3.jpg?ts=1770627904857&w=563",
+      "productUrl": "https://www.zara.com/us/en/ruffled-satin-effect-blouse-with-shoulder-pads-p02138842.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "512768565",
+      "name": "PLEATED BALLOON PANTS",
+      "price": "$59.90",
+      "color": "Black, Chocolate brown",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/82f8/b87b/68234efbad62/6498463ea923/04661408800-p/04661408800-p.jpg?ts=1769795492041&w=563",
+      "productUrl": "https://www.zara.com/us/en/pleated-balloon-pants-p04661408.html",
+      "score": 95,
+      "matchReason": "taupe brown \u2014 great palette match \u00b7 elegant movement"
+    },
+    {
+      "id": "498708432",
+      "name": "EMBROIDERED BLOOMER PANTS",
+      "price": "$79.90",
+      "color": "Light gray",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/e29c/c141/8be34c759542/c8eed5c41b08/05063310811-p/05063310811-p.jpg?ts=1772207485528&w=563",
+      "productUrl": "https://www.zara.com/us/en/embroidered-bloomer-pants-p05063310.html",
+      "score": 95,
+      "matchReason": "Light gray \u2014 great palette match \u00b7 nice fabric"
+    },
+    {
+      "id": "495706051",
+      "name": "ZW COLLECTION EMBROIDERED CAPE BLOUSE",
+      "price": "$89.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/ba3b/a471/c1ca4e7291e5/c0a5fd2512c5/05107043712-p/05107043712-p.jpg?ts=1773138485411&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-embroidered-cape-blouse-p05107043.html",
+      "score": 95,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+    }
+  ],
+  "outfits": [
+    {
+      "id": "outfit-1",
+      "name": "Effortless Work Day",
+      "vibe": "Polished but relaxed \u2014 perfect for a SF coffee meeting",
+      "items": [
+        {
+          "id": "502146627",
+          "name": "COMBINATION KNIT BLOUSE",
+          "price": "$59.90",
+          "color": "Ecru",
+          "category": "blouses",
+          "imageUrl": "https://static.zara.net/assets/public/ff12/5aa5/562845818f1f/5d9ada7e5e46/04192067712-p/04192067712-p.jpg?ts=1771593437229&w=563",
+          "productUrl": "https://www.zara.com/us/en/combination-knit-blouse-p04192067.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+        },
+        {
+          "id": "505079618",
+          "name": "ZW COLLECTION PLEATED WIDE LEG PANTS",
+          "price": "$79.90",
+          "color": "Pastel pink, Ecru",
+          "category": "pants",
+          "imageUrl": "https://static.zara.net/assets/public/32d1/7826/edd6446888fc/5c4c263a4285/05247044621-p/05247044621-p.jpg?ts=1772191103952&w=563",
+          "productUrl": "https://www.zara.com/us/en/zw-collection-pleated-wide-leg-pants-p05247044.html",
+          "score": 100,
+          "matchReason": "Pastel pink \u2014 great palette match \u00b7 flattering cut"
+        }
+      ],
+      "totalPrice": "$139.80"
+    },
+    {
+      "id": "outfit-2",
+      "name": "Layered & Put Together",
+      "vibe": "A structured blazer over a soft blouse \u2014 SF layers done right",
+      "items": [
+        {
+          "id": "495686016",
+          "name": "TAILORED OPEN FRONT BLAZER",
+          "price": "$99.90",
+          "color": "Ecru",
+          "category": "blazers",
+          "imageUrl": "https://static.zara.net/assets/public/91b5/ebcb/bb21490b8132/478bab0b63c6/08531597712-p/08531597712-p.jpg?ts=1770190815403&w=563",
+          "productUrl": "https://www.zara.com/us/en/tailored-blazer-with-no-lapel-p08531597.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition"
+        },
+        {
+          "id": "498900515",
+          "name": "ZW COLLECTION ROMANTIC LACE BLOUSE",
+          "price": "$79.90",
+          "color": "Ecru",
+          "category": "blouses",
+          "imageUrl": "https://static.zara.net/assets/public/9c98/98d3/75524a789e93/01d422690449/04786039712-p/04786039712-p.jpg?ts=1772191312991&w=563",
+          "productUrl": "https://www.zara.com/us/en/zw-collection-romantic-lace-blouse-p04786039.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+        },
+        {
+          "id": "504024429",
+          "name": "STRUCTURED KNIT BALLOON SKIRT",
+          "price": "$69.90",
+          "color": "Ecru",
+          "category": "skirts",
+          "imageUrl": "https://static.zara.net/assets/public/3780/a492/5ca04bbb8345/ba53c01b8e4c/04192073712-p/04192073712-p.jpg?ts=1773253786150&w=563",
+          "productUrl": "https://www.zara.com/us/en/structured-knit-balloon-skirt-p04192073.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition \u00b7 nice fabric"
+        }
+      ],
+      "totalPrice": "$249.70"
+    },
+    {
+      "id": "outfit-3",
+      "name": "One & Done Midi",
+      "vibe": "A single piece that does all the work \u2014 throw on a cardigan for foggy mornings",
+      "items": [
+        {
+          "id": "497493941",
+          "name": "LONG TEXTURED PLEATED STRIPED DRESS",
+          "price": "$59.90",
+          "color": "Ecru / Brown",
+          "category": "dresses",
+          "imageUrl": "https://static.zara.net/assets/public/8119/faf6/bce44dc4a152/71f4a8a792d9/08779153086-p/08779153086-p.jpg?ts=1770832579767&w=563",
+          "productUrl": "https://www.zara.com/us/en/long-textured-pleated-striped-dress-p08779153.html",
+          "score": 100,
+          "matchReason": "Ecru / Brown \u2014 great palette match \u00b7 elegant movement \u00b7 nice fabric"
+        }
+      ],
+      "totalPrice": "$59.90"
+    },
+    {
+      "id": "outfit-4",
+      "name": "Weekend in the Mission",
+      "vibe": "Relaxed but stylish \u2014 brunch to bookstore to dinner",
+      "items": [
+        {
+          "id": "499564779",
+          "name": "ZW COLLECTION CROCHET BLOUSE",
+          "price": "$59.90",
+          "color": "Ecru",
+          "category": "blouses",
+          "imageUrl": "https://static.zara.net/assets/public/27dc/ab9c/f1af4631988d/c3baa29e5ae5/04786023712-p/04786023712-p.jpg?ts=1773076326837&w=563",
+          "productUrl": "https://www.zara.com/us/en/zw-collection-crochet-blouse-p04786023.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+        },
+        {
+          "id": "514996703",
+          "name": "100% LINEN STRAIGHT LEG PANTS",
+          "price": "$79.90",
+          "color": "Sand / Marl",
+          "category": "pants",
+          "imageUrl": "https://static.zara.net/assets/public/fe25/cb58/836c49689d43/96dd9239dcd9/02600832081-p/02600832081-p.jpg?ts=1773413600486&w=563",
+          "productUrl": "https://www.zara.com/us/en/100-linen-straight-leg-pants-p02600832.html",
+          "score": 100,
+          "matchReason": "Sand / Marl \u2014 great palette match \u00b7 flattering cut \u00b7 nice fabric"
+        }
+      ],
+      "totalPrice": "$139.80"
+    },
+    {
+      "id": "outfit-5",
+      "name": "Dinner at the Marina",
+      "vibe": "Elevated evening look \u2014 dress + blazer for that SF chill",
+      "items": [
+        {
+          "id": "502479454",
+          "name": "BALLOON SLEEVE MIDI DRESS",
+          "price": "$89.90",
+          "color": "Oyster-white",
+          "category": "dresses",
+          "imageUrl": "https://static.zara.net/assets/public/e31b/2636/a2374e8d8de1/0e1799b999bc/02201957251-p/02201957251-p.jpg?ts=1770384930310&w=563",
+          "productUrl": "https://www.zara.com/us/en/balloon-sleeve-midi-dress-p02201957.html",
+          "score": 100,
+          "matchReason": "Oyster-white \u2014 great palette match \u00b7 ideal length/cut"
+        },
+        {
+          "id": "495686016",
+          "name": "TAILORED OPEN FRONT BLAZER",
+          "price": "$99.90",
+          "color": "Ecru",
+          "category": "blazers",
+          "imageUrl": "https://static.zara.net/assets/public/91b5/ebcb/bb21490b8132/478bab0b63c6/08531597712-p/08531597712-p.jpg?ts=1770190815403&w=563",
+          "productUrl": "https://www.zara.com/us/en/tailored-blazer-with-no-lapel-p08531597.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition"
+        }
+      ],
+      "totalPrice": "$189.80"
+    },
+    {
+      "id": "outfit-6",
+      "name": "Soft & Feminine",
+      "vibe": "Flowy skirt with a delicate top \u2014 muted tones that complement your palette",
+      "items": [
+        {
+          "id": "499564779",
+          "name": "ZW COLLECTION CROCHET BLOUSE",
+          "price": "$59.90",
+          "color": "Ecru",
+          "category": "blouses",
+          "imageUrl": "https://static.zara.net/assets/public/27dc/ab9c/f1af4631988d/c3baa29e5ae5/04786023712-p/04786023712-p.jpg?ts=1773076326837&w=563",
+          "productUrl": "https://www.zara.com/us/en/zw-collection-crochet-blouse-p04786023.html",
+          "score": 100,
+          "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric"
+        },
+        {
+          "id": "501622819",
+          "name": "GINGHAM CHECK MIDI SKIRT",
+          "price": "$59.90",
+          "color": "Ecru / Black",
+          "category": "skirts",
+          "imageUrl": "https://static.zara.net/assets/public/bdcc/dc91/7d4746149916/43d1541fd528/05029063070-p/05029063070-p.jpg?ts=1771596241044&w=563",
+          "productUrl": "https://www.zara.com/us/en/gingham-midi-skirt-p05029063.html",
+          "score": 100,
+          "matchReason": "Ecru / Black \u2014 great palette match \u00b7 ideal length/cut"
+        }
+      ],
+      "totalPrice": "$119.80"
+    }
+  ],
+  "total": 164,
+  "curated": 40,
+  "lastRefresh": "2026-03-15T16:00:00Z",
+  "location": "San Francisco, CA",
+  "basics": [
+    {
+      "id": "495686016",
+      "name": "TAILORED OPEN FRONT BLAZER",
+      "price": "$99.90",
+      "color": "Ecru",
+      "category": "blazers",
+      "imageUrl": "https://static.zara.net/assets/public/91b5/ebcb/bb21490b8132/478bab0b63c6/08531597712-p/08531597712-p.jpg?ts=1770190815403&w=563",
+      "productUrl": "https://www.zara.com/us/en/tailored-blazer-with-no-lapel-p08531597.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition",
+      "basicRole": "The Everyday Blazer"
+    },
+    {
+      "id": "505079618",
+      "name": "ZW COLLECTION PLEATED WIDE LEG PANTS",
+      "price": "$79.90",
+      "color": "Pastel pink, Ecru",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/32d1/7826/edd6446888fc/5c4c263a4285/05247044621-p/05247044621-p.jpg?ts=1772191103952&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-pleated-wide-leg-pants-p05247044.html",
+      "score": 100,
+      "matchReason": "Pastel pink \u2014 great palette match \u00b7 flattering cut",
+      "basicRole": "The Go-To Pants"
+    },
+    {
+      "id": "514996703",
+      "name": "100% LINEN STRAIGHT LEG PANTS",
+      "price": "$79.90",
+      "color": "Sand / Marl",
+      "category": "pants",
+      "imageUrl": "https://static.zara.net/assets/public/fe25/cb58/836c49689d43/96dd9239dcd9/02600832081-p/02600832081-p.jpg?ts=1773413600486&w=563",
+      "productUrl": "https://www.zara.com/us/en/100-linen-straight-leg-pants-p02600832.html",
+      "score": 100,
+      "matchReason": "Sand / Marl \u2014 great palette match \u00b7 flattering cut \u00b7 nice fabric",
+      "basicRole": "The Relaxed Pants"
+    },
+    {
+      "id": "497493941",
+      "name": "LONG TEXTURED PLEATED STRIPED DRESS",
+      "price": "$59.90",
+      "color": "Ecru / Brown",
+      "category": "dresses",
+      "imageUrl": "https://static.zara.net/assets/public/8119/faf6/bce44dc4a152/71f4a8a792d9/08779153086-p/08779153086-p.jpg?ts=1770832579767&w=563",
+      "productUrl": "https://www.zara.com/us/en/long-textured-pleated-striped-dress-p08779153.html",
+      "score": 100,
+      "matchReason": "Ecru / Brown \u2014 great palette match \u00b7 elegant movement \u00b7 nice fabric",
+      "basicRole": "The Easy Midi Dress"
+    },
+    {
+      "id": "504024429",
+      "name": "STRUCTURED KNIT BALLOON SKIRT",
+      "price": "$69.90",
+      "color": "Ecru",
+      "category": "skirts",
+      "imageUrl": "https://static.zara.net/assets/public/3780/a492/5ca04bbb8345/ba53c01b8e4c/04192073712-p/04192073712-p.jpg?ts=1773253786150&w=563",
+      "productUrl": "https://www.zara.com/us/en/structured-knit-balloon-skirt-p04192073.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 structured piece adds definition \u00b7 nice fabric",
+      "basicRole": "The Everyday Skirt"
+    },
+    {
+      "id": "502146627",
+      "name": "COMBINATION KNIT BLOUSE",
+      "price": "$59.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/ff12/5aa5/562845818f1f/5d9ada7e5e46/04192067712-p/04192067712-p.jpg?ts=1771593437229&w=563",
+      "productUrl": "https://www.zara.com/us/en/combination-knit-blouse-p04192067.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric",
+      "basicRole": "The Polished Top"
+    },
+    {
+      "id": "498900515",
+      "name": "ZW COLLECTION ROMANTIC LACE BLOUSE",
+      "price": "$79.90",
+      "color": "Ecru",
+      "category": "blouses",
+      "imageUrl": "https://static.zara.net/assets/public/9c98/98d3/75524a789e93/01d422690449/04786039712-p/04786039712-p.jpg?ts=1772191312991&w=563",
+      "productUrl": "https://www.zara.com/us/en/zw-collection-romantic-lace-blouse-p04786039.html",
+      "score": 100,
+      "matchReason": "Ecru \u2014 great palette match \u00b7 nice fabric",
+      "basicRole": "The Casual Top"
+    }
+  ]
+}
