@@ -241,18 +241,6 @@
       "brand": "Zara"
     },
     {
-      "id": "517569640",
-      "name": "ZW COLLECTION FLOWY WRAP BLOUSE",
-      "price": "$69.90",
-      "color": "Ecru",
-      "category": "blouses",
-      "imageUrl": "https://static.zara.net/assets/public/72fe/77d1/bbdf4ba2a094/e650e0c91eff/01102689712-060-p/01102689712-060-p.jpg?ts=1772799640325&w=563",
-      "productUrl": "https://www.zara.com/us/en/zw-collection-flowy-wrap-blouse-p01102689.html",
-      "score": 87,
-      "matchReason": "Ecru \u2014 wrap style is a Sport signature \u00b7 defines waist \u00b7 effortless with wide-leg denim",
-      "brand": "Zara"
-    },
-    {
       "id": "502043326",
       "name": "SATIN EFFECT BLOUSE WITH SHOULDER PADS",
       "price": "$49.90",
@@ -457,18 +445,6 @@
       "matchReason": "Flattering silhouette for hourglass shape; quality fabric"
     },
     {
-      "id": "uniqlo-E476997-000",
-      "name": "Washable Knitted Polo Sweater | Short Sleeve",
-      "price": "$39.90",
-      "color": "BLACK",
-      "category": "blouses",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/476997/item/usgoods_30_476997_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E476997-000/00",
-      "score": 100,
-      "matchReason": "Great layering piece for sf"
-    },
-    {
       "id": "uniqlo-E484503-000",
       "name": "Smooth Cotton Polo Sweater | Striped",
       "price": "$49.90",
@@ -493,18 +469,6 @@
       "matchReason": "Flattering silhouette for hourglass shape; quality fabric"
     },
     {
-      "id": "uniqlo-E477704-000",
-      "name": "AirSense Blazer",
-      "price": "$99.90",
-      "color": "NAVY",
-      "category": "blazers",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/477704/item/usgoods_69_477704_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E477704-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; great layering piece for sf"
-    },
-    {
       "id": "uniqlo-E484664-000",
       "name": "Barn Short Jacket | Denim",
       "price": "$69.90",
@@ -513,30 +477,6 @@
       "brand": "Uniqlo",
       "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484664/item/usgoods_69_484664_3x4.jpg",
       "productUrl": "https://www.uniqlo.com/us/en/products/E484664-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; quality fabric"
-    },
-    {
-      "id": "uniqlo-E484402-000",
-      "name": "Denim Trucker Jacket",
-      "price": "$69.90",
-      "color": "BLUE",
-      "category": "outerwear",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484402/item/usgoods_64_484402_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E484402-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; quality fabric"
-    },
-    {
-      "id": "uniqlo-E487640-000",
-      "name": "Utility Jacket | Denim",
-      "price": "$49.90",
-      "color": "BLUE",
-      "category": "outerwear",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/487640/item/usgoods_68_487640_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E487640-000/00",
       "score": 100,
       "matchReason": "Soft summer palette color; quality fabric"
     },
@@ -587,18 +527,6 @@
       "productUrl": "https://www.uniqlo.com/us/en/products/E475053-000/00",
       "score": 100,
       "matchReason": "Quality fabric; great layering piece for sf"
-    },
-    {
-      "id": "uniqlo-E453754-000",
-      "name": "Washable Milano Ribbed Sweater",
-      "price": "$49.90",
-      "color": "LIGHT BLUE",
-      "category": "blouses",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/453754/item/usgoods_60_453754_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E453754-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; great layering piece for sf"
     },
     {
       "id": "uniqlo-E480414-000",
@@ -781,18 +709,6 @@
       "matchReason": "Soft summer palette color; quality fabric"
     },
     {
-      "id": "uniqlo-E482443-000",
-      "name": "Cotton Linen Shirt Jacket",
-      "price": "$59.90",
-      "color": "DARK BROWN",
-      "category": "outerwear",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/482443/item/usgoods_30_482443_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E482443-000/00",
-      "score": 97,
-      "matchReason": "Soft summer palette color; quality fabric"
-    },
-    {
       "id": "uniqlo-E483069-000",
       "name": "Fit And Flare Dress",
       "price": "$39.90",
@@ -817,18 +733,6 @@
       "matchReason": "Soft summer palette color; quality fabric"
     },
     {
-      "id": "uniqlo-E484245-000",
-      "name": "Denim Shirt",
-      "price": "$49.90",
-      "color": "BLUE",
-      "category": "blouses",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484245/item/usgoods_68_484245_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E484245-000/00",
-      "score": 92,
-      "matchReason": "Soft summer palette color; quality fabric"
-    },
-    {
       "id": "uniqlo-E482243-000",
       "name": "Cotton Relaxed Ankle Pants",
       "price": "$39.90",
@@ -849,18 +753,6 @@
       "brand": "Uniqlo",
       "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/483896/item/usgoods_65_483896_3x4.jpg",
       "productUrl": "https://www.uniqlo.com/us/en/products/E483896-000/00",
-      "score": 92,
-      "matchReason": "Soft summer palette color; quality fabric"
-    },
-    {
-      "id": "uniqlo-E461420-000",
-      "name": "Stretch Easy Ankle Pants | Denim",
-      "price": "$49.90",
-      "color": "BLUE",
-      "category": "pants",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/461420/item/usgoods_62_461420_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E461420-000/00",
       "score": 92,
       "matchReason": "Soft summer palette color; quality fabric"
     },
@@ -1453,18 +1345,6 @@
       "matchReason": "Everyday sneaker for Sport style"
     },
     {
-      "id": "quince-silk-notch-collar-blouse_ivory",
-      "name": "Washable Stretch Silk Notch Collar Blouse",
-      "price": "$69.90",
-      "color": "",
-      "category": "blouses",
-      "brand": "Quince",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/QUINCE_W-BLO-29-IVO_1789_57515e64-2fd8-42d7-b6c6-bd6010b9cb8d_1080x1080_pad_ffffff.jpg.jpg?v=1604933199",
-      "productUrl": "https://quince.com/women/silk/silk-notch-collar-blouse?color=ivory",
-      "score": 80,
-      "matchReason": "Quality silk fabric"
-    },
-    {
       "id": "quince-silk-v-neck-cami_ivory",
       "name": "Washable Stretch Silk V-Neck Cami",
       "price": "$39.90",
@@ -1525,18 +1405,6 @@
       "matchReason": "Quality silk fabric"
     },
     {
-      "id": "quince-silk-notch-collar-blouse_copper-brown",
-      "name": "Washable Stretch Silk Notch Collar Blouse",
-      "price": "$69.90",
-      "color": "",
-      "category": "blouses",
-      "brand": "Quince",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/W-BLO-29-CBRN_0746_1080x1080_pad_ffffff.jpg.jpg?v=1666893564",
-      "productUrl": "https://quince.com/women/silk/silk-notch-collar-blouse?color=copper-brown",
-      "score": 80,
-      "matchReason": "Quality silk fabric"
-    },
-    {
       "id": "quince-silk-notch-collar-blouse_black",
       "name": "Washable Stretch Silk Notch Collar Blouse",
       "price": "$69.90",
@@ -1585,30 +1453,6 @@
       "matchReason": "Everyday shoe option"
     },
     {
-      "id": "uniqlo-E484166-000",
-      "name": "Deck Shoes",
-      "price": "$59.90",
-      "color": "BROWN",
-      "category": "shoes",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/484166/item/goods_37_484166_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E484166-000/00",
-      "score": 65,
-      "matchReason": "Everyday shoe option"
-    },
-    {
-      "id": "uniqlo-E484330-000",
-      "name": "Combination Sneaker",
-      "price": "$69.90",
-      "color": "LIGHT GREEN",
-      "category": "shoes",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/484330/item/goods_50_484330_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E484330-000/00",
-      "score": 85,
-      "matchReason": "Everyday shoe option"
-    },
-    {
       "id": "uniqlo-E481616-000",
       "name": "Rope Sandals",
       "price": "$39.90",
@@ -1645,42 +1489,6 @@
       "matchReason": "Versatile everyday bag"
     },
     {
-      "id": "uniqlo-E481630-000",
-      "name": "Multi Pocket Shoulder Bag",
-      "price": "$19.90",
-      "color": "OLIVE",
-      "category": "accessories",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/481630/item/goods_57_481630_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E481630-000/00",
-      "score": 85,
-      "matchReason": "Versatile everyday bag"
-    },
-    {
-      "id": "uniqlo-E481629-000",
-      "name": "Multi Pocket Backpack",
-      "price": "$49.90",
-      "color": "OLIVE",
-      "category": "accessories",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/481629/item/goods_57_481629_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E481629-000/00",
-      "score": 65,
-      "matchReason": "Versatile everyday bag"
-    },
-    {
-      "id": "uniqlo-E486766-000",
-      "name": "Crossbody Bag",
-      "price": "$19.90",
-      "color": "BLUE",
-      "category": "accessories",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/WesternCommon/imagesgoods/486766/item/goods_64_486766_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E486766-000/00",
-      "score": 85,
-      "matchReason": "Versatile everyday bag"
-    },
-    {
       "id": "uniqlo-E478708-000",
       "name": "Round Mini Shoulder Bag",
       "price": "$19.90",
@@ -1710,14 +1518,15 @@
           "productUrl": "https://www.uniqlo.com/us/en/products/E479223-000/00"
         },
         {
-          "id": "517569640",
-          "name": "ZW COLLECTION FLOWY WRAP BLOUSE",
-          "price": "$69.90",
-          "color": "Ecru",
+          "id": "quince-women-s-washable-stretch-silk-dolman-sleeve-blouse_ivory",
+          "name": "Washable Stretch Silk Dolman Sleeve Blouse",
+          "price": "$59.90",
+          "color": "",
           "category": "blouses",
-          "brand": "Zara",
-          "imageUrl": "https://static.zara.net/assets/public/72fe/77d1/bbdf4ba2a094/e650e0c91eff/01102689712-060-p/01102689712-060-p.jpg?ts=1772799640325&w=563",
-          "productUrl": "https://www.zara.com/us/en/zw-collection-flowy-wrap-blouse-p01102689.html"
+          "brand": "Quince",
+          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/W-BLO-52-IVY_0306_1080x1080_pad_ffffff.jpg.jpg?v=1663104530",
+          "productUrl": "https://quince.com/women/women-s-washable-stretch-silk-dolman-sleeve-blouse?color=ivory",
+          "score": 70
         },
         {
           "id": "uniqlo-E476209-000",
@@ -1730,7 +1539,7 @@
           "productUrl": "https://www.uniqlo.com/us/en/products/E476209-000/00"
         }
       ],
-      "totalPrice": "$269.70"
+      "totalPrice": "$259.70"
     },
     {
       "id": "outfit-casual-friday",
@@ -1776,24 +1585,26 @@
       "vibe": "Denim jacket + contrasting jeans \u2014 Sport personality at its best",
       "items": [
         {
-          "id": "uniqlo-E484402-000",
-          "name": "Denim Trucker Jacket",
+          "id": "uniqlo-E484664-000",
+          "name": "Barn Short Jacket | Denim",
           "price": "$69.90",
-          "color": "BLUE",
+          "color": "NAVY",
           "category": "outerwear",
           "brand": "Uniqlo",
-          "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484402/item/usgoods_64_484402_3x4.jpg",
-          "productUrl": "https://www.uniqlo.com/us/en/products/E484402-000/00"
+          "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484664/item/usgoods_69_484664_3x4.jpg",
+          "productUrl": "https://www.uniqlo.com/us/en/products/E484664-000/00",
+          "score": 100
         },
         {
-          "id": "uniqlo-E476997-000",
-          "name": "Washable Knitted Polo Sweater | Short Sleeve",
-          "price": "$39.90",
-          "color": "BLACK",
+          "id": "uniqlo-E475053-000",
+          "name": "Smooth Cotton Sweater",
+          "price": "$49.90",
+          "color": "OFF WHITE",
           "category": "blouses",
           "brand": "Uniqlo",
-          "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/476997/item/usgoods_30_476997_3x4.jpg",
-          "productUrl": "https://www.uniqlo.com/us/en/products/E476997-000/00"
+          "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/475053/item/usgoods_14_475053_3x4.jpg",
+          "productUrl": "https://www.uniqlo.com/us/en/products/E475053-000/00",
+          "score": 100
         },
         {
           "id": "jeans-folded-taupe",
@@ -1806,7 +1617,7 @@
           "productUrl": "https://www.zara.com/us/en/trf-folded-waist-mid-rise-jeans-p05252014.html"
         }
       ],
-      "totalPrice": "$179.70"
+      "totalPrice": "$189.70"
     },
     {
       "id": "outfit-soft-power",
@@ -1824,14 +1635,15 @@
           "productUrl": "https://www.zara.com/us/en/tailored-blazer-with-no-lapel-p08531597.html"
         },
         {
-          "id": "quince-silk-notch-collar-blouse_ivory",
-          "name": "Washable Stretch Silk Notch Collar Blouse",
-          "price": "$69.90",
+          "id": "quince-silk-v-neck-cami_ivory",
+          "name": "Washable Stretch Silk V-Neck Cami",
+          "price": "$39.90",
           "color": "",
           "category": "blouses",
           "brand": "Quince",
-          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/QUINCE_W-BLO-29-IVO_1789_57515e64-2fd8-42d7-b6c6-bd6010b9cb8d_1080x1080_pad_ffffff.jpg.jpg?v=1604933199",
-          "productUrl": "https://quince.com/women/silk/silk-notch-collar-blouse?color=ivory"
+          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/W-SSG-GRE_01218_1080x1080_pad_ffffff.jpg.jpg?v=1627053963",
+          "productUrl": "https://quince.com/women/silk-v-neck-cami?color=ivory",
+          "score": 80
         },
         {
           "id": "512768565",
@@ -1844,7 +1656,7 @@
           "productUrl": "https://www.zara.com/us/en/pleated-balloon-pants-p04661408.html"
         }
       ],
-      "totalPrice": "$229.70"
+      "totalPrice": "$199.70"
     },
     {
       "id": "outfit-weekend-stroll",
@@ -1870,9 +1682,20 @@
           "brand": "Uniqlo",
           "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/483823/item/usgoods_31_483823_3x4.jpg",
           "productUrl": "https://www.uniqlo.com/us/en/products/E483823-000/00"
+        },
+        {
+          "id": "quince-silk-tank_ivory",
+          "name": "Washable Stretch Silk Tank",
+          "price": "$39.90",
+          "color": "",
+          "category": "blouses",
+          "brand": "Quince",
+          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/200622_LB_24_briana_0622_3813_81c7e551-f11a-4f89-9e4e-fcf7244fbb65_1080x1080_pad_ffffff.jpg.jpg?v=1604932005",
+          "productUrl": "https://quince.com/women/silk/silk-tank?color=ivory",
+          "score": 70
         }
       ],
-      "totalPrice": "$219.80"
+      "totalPrice": "$259.70"
     },
     {
       "id": "outfit-muted-elegance",
@@ -1890,6 +1713,17 @@
           "productUrl": "https://www.zara.com/us/en/belted-trench-coat-zw-collection-p00518050.html"
         },
         {
+          "id": "quince-cashmere-v-neck-sweater_oatmeal",
+          "name": "Women's Mongolian Cashmere V-Neck Sweater in Oatmeal Size XS",
+          "price": "$50.00",
+          "color": "",
+          "category": "blouses",
+          "brand": "Quince",
+          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/QUINCE_W-HKT-8-OAT_479_15216b5e-1ca7-4176-8eee-3295fe62078f_1080x1080_pad_ffffff.jpg.jpg?v=1604929971",
+          "productUrl": "https://quince.com/women/cashmere/cashmere-v-neck-sweater?color=oatmeal",
+          "score": 100
+        },
+        {
           "id": "502043235",
           "name": "BELTED MIDI DRESS",
           "price": "$79.90",
@@ -1900,7 +1734,7 @@
           "productUrl": "https://www.zara.com/us/en/belted-midi-dress-p05029101.html"
         }
       ],
-      "totalPrice": "$228.90"
+      "totalPrice": "$278.90"
     },
     {
       "id": "outfit-everyday-sport",
@@ -1956,6 +1790,17 @@
           "productUrl": "https://www.zara.com/us/en/knit-belt-vest-p02756004.html"
         },
         {
+          "id": "502146627",
+          "name": "COMBINATION KNIT BLOUSE",
+          "price": "$59.90",
+          "color": "Ecru",
+          "category": "blouses",
+          "brand": "Zara",
+          "imageUrl": "https://static.zara.net/assets/public/ff12/5aa5/562845818f1f/5d9ada7e5e46/04192067712-p/04192067712-p.jpg?ts=1771593437229&w=563",
+          "productUrl": "https://www.zara.com/us/en/combination-knit-blouse-p04192067.html",
+          "score": 88
+        },
+        {
           "id": "514996703",
           "name": "100% LINEN STRAIGHT LEG PANTS",
           "price": "$79.90",
@@ -1964,19 +1809,9 @@
           "brand": "Zara",
           "imageUrl": "https://static.zara.net/assets/public/fe25/cb58/836c49689d43/96dd9239dcd9/02600832081-p/02600832081-p.jpg?ts=1773413600486&w=563",
           "productUrl": "https://www.zara.com/us/en/100-linen-straight-leg-pants-p02600832.html"
-        },
-        {
-          "id": "quince-silk-notch-collar-blouse_ivory",
-          "name": "Washable Stretch Silk Notch Collar Blouse",
-          "price": "$69.90",
-          "color": "",
-          "category": "blouses",
-          "brand": "Quince",
-          "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/QUINCE_W-BLO-29-IVO_1789_57515e64-2fd8-42d7-b6c6-bd6010b9cb8d_1080x1080_pad_ffffff.jpg.jpg?v=1604933199",
-          "productUrl": "https://quince.com/women/silk/silk-notch-collar-blouse?color=ivory"
         }
       ],
-      "totalPrice": "$209.70"
+      "totalPrice": "$199.70"
     }
   ],
   "basics": [
@@ -1992,19 +1827,6 @@
       "matchReason": "Ecru \u2014 knit weight perfect for SF \u00b7 V-neck friendly shape \u00b7 tucks into wide-leg jeans",
       "brand": "Zara",
       "basicRole": "White button-down shirt"
-    },
-    {
-      "id": "quince-silk-notch-collar-blouse_ivory",
-      "name": "Washable Stretch Silk Notch Collar Blouse",
-      "price": "$69.90",
-      "color": "",
-      "category": "blouses",
-      "brand": "Quince",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0056/4432/0879/products/QUINCE_W-BLO-29-IVO_1789_57515e64-2fd8-42d7-b6c6-bd6010b9cb8d_1080x1080_pad_ffffff.jpg.jpg?v=1604933199",
-      "productUrl": "https://quince.com/women/silk/silk-notch-collar-blouse?color=ivory",
-      "score": 80,
-      "matchReason": "Quality silk fabric",
-      "basicRole": "Silk blouse"
     },
     {
       "id": "basic-foundation-tee",
@@ -2163,19 +1985,6 @@
       "basicRole": "Little black dress"
     },
     {
-      "id": "uniqlo-E477704-000",
-      "name": "AirSense Blazer",
-      "price": "$99.90",
-      "color": "NAVY",
-      "category": "blazers",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/477704/item/usgoods_69_477704_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E477704-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; great layering piece for sf",
-      "basicRole": "Dark blazer"
-    },
-    {
       "id": "513365501",
       "name": "ZW COLLECTION LAPELLESS LONG BLAZER",
       "price": "$179.00",
@@ -2200,19 +2009,6 @@
       "matchReason": "Brown \u2014 Sport signature piece \u00b7 leather jacket defines the style \u00b7 instant edge over any outfit",
       "brand": "Zara",
       "basicRole": "Leather jacket"
-    },
-    {
-      "id": "uniqlo-E484402-000",
-      "name": "Denim Trucker Jacket",
-      "price": "$69.90",
-      "color": "BLUE",
-      "category": "outerwear",
-      "brand": "Uniqlo",
-      "imageUrl": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/484402/item/usgoods_64_484402_3x4.jpg",
-      "productUrl": "https://www.uniqlo.com/us/en/products/E484402-000/00",
-      "score": 100,
-      "matchReason": "Soft summer palette color; quality fabric",
-      "basicRole": "Denim jacket"
     },
     {
       "id": "495706178",
