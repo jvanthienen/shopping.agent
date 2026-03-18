@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import OutfitCard from "@/components/OutfitCard";
 import Cart from "@/components/Cart";
 import { Product, Outfit } from "@/lib/types";
-import { hasStyleProfile, loadStyleProfileFromSupabase } from "@/lib/styleProfile";
+import { hasStyleProfile, getStyleProfile, loadStyleProfileFromSupabase } from "@/lib/styleProfile";
 import Link from "next/link";
 
 type Tab = "outfits" | "basics" | "pieces" | "skipped";
@@ -51,13 +51,15 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
-  const [tab, setTab] = useState<Tab>("outfits");
+  const [tab, setTab] = useState<Tab>("basics");
   const [category, setCategory] = useState<Category>("all");
   const [brand, setBrand] = useState<Brand>("all");
   const [showAllPieces, setShowAllPieces] = useState(false);
   const [sectionIndex, setSectionIndex] = useState<Record<string, number>>({});
   const [stats, setStats] = useState<{ total: number; curated: number; location?: string } | null>(null);
   const [profileExists, setProfileExists] = useState(true); // default true to avoid flash
+  const [capsuleProducts, setCapsuleProducts] = useState<{ name: string; price: string; imageUrl: string; productUrl: string; brand: string }[]>([]);
+  const [capsuleDismissed, setCapsuleDismissed] = useState(false);
 
   useEffect(() => {
     // Check localStorage first (fast), then Supabase (authoritative)
@@ -69,6 +71,26 @@ export default function Home() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (!profileExists) return;
+    const profile = getStyleProfile();
+    if (!profile.capsuleWardrobe) return;
+    fetch("/api/lookbook-products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ capsuleWardrobe: profile.capsuleWardrobe }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data?.capsule) return;
+        const all = Object.values(data.capsule as Record<string, { name: string; price: string; imageUrl: string; productUrl: string; brand: string }[]>)
+          .flat()
+          .filter((p) => p.imageUrl);
+        setCapsuleProducts(all.slice(0, 12));
+      })
+      .catch(() => {});
+  }, [profileExists]);
 
   useEffect(() => {
     fetch("/products.json")
@@ -272,8 +294,8 @@ export default function Home() {
         {/* Tabs */}
         <div className="max-w-6xl mx-auto px-5 pb-3 flex gap-6 overflow-x-auto no-scrollbar">
           {[
+            { key: "basics" as Tab, label: "Wardrobe Capsule", count: basics.length },
             { key: "outfits" as Tab, label: "Outfits", count: outfits.length },
-            { key: "basics" as Tab, label: "Basics", count: basics.length },
             { key: "pieces" as Tab, label: "All Pieces", count: feedProducts.length },
             { key: "skipped" as Tab, label: "Skipped", count: skipped.length },
           ].map((t) => (
@@ -294,6 +316,47 @@ export default function Home() {
           ))}
         </div>
       </header>
+
+      {/* Capsule Essentials */}
+      {capsuleProducts.length > 0 && !capsuleDismissed && (
+        <div className="max-w-6xl mx-auto px-5 pt-5">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="font-serif text-lg text-stone-900">Your Capsule Essentials</h2>
+              <p className="text-stone-400 text-xs">Based on your style profile</p>
+            </div>
+            <button
+              onClick={() => setCapsuleDismissed(true)}
+              className="text-stone-300 hover:text-stone-500 transition-colors text-lg leading-none"
+              aria-label="Dismiss capsule section"
+            >
+              &times;
+            </button>
+          </div>
+          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-3">
+            {capsuleProducts.map((p, i) => (
+              <a
+                key={i}
+                href={p.productUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-32 group"
+              >
+                <div className="aspect-[3/4] bg-stone-100 rounded-xl overflow-hidden mb-1.5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.imageUrl}
+                    alt={p.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <p className="text-stone-700 text-[11px] truncate">{p.name}</p>
+                <p className="text-stone-400 text-[10px]">{p.brand} &middot; {p.price}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       {(tab === "pieces" || tab === "skipped") && (
@@ -381,9 +444,9 @@ export default function Home() {
         {!loading && !error && tab === "basics" && (
           <>
             <div className="mb-8">
-              <h2 className="font-serif text-xl text-stone-900">Basics for your wardrobe</h2>
+              <h2 className="font-serif text-xl text-stone-900">Your Wardrobe Capsule</h2>
               <p className="text-stone-400 text-sm mt-1 font-light">
-                Browse the basics that you need to have and renew every once in a while.
+                The essential pieces every wardrobe needs, curated for your style.
               </p>
             </div>
             <div className="space-y-10">
