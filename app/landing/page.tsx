@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Your Personal Stylist | AI-Powered Shopping for Busy Women",
   description:
-    "Upload two photos, answer a few questions, and get a curated wardrobe from Zara, Uniqlo, and Quince — scored for your coloring, body shape, and style. Free to start.",
+    "Upload two photos, answer a few questions, and get a curated wardrobe from your favorite brands — scored for your coloring, body shape, and style. Free to start.",
   openGraph: {
     title: "Your Personal Stylist | AI-Powered Shopping for Busy Women",
     description:
@@ -35,7 +35,7 @@ const STEPS = [
     number: "03",
     title: "Shop what works",
     description:
-      "We scan new arrivals from Zara, Uniqlo, and Quince, score every piece against your profile, and show you only what fits. Complete outfits. Your sizes. Your colors. Ready to buy.",
+      "We scan new arrivals from your favorite brands, score every piece against your profile, and show you only what fits. Complete outfits. Your sizes. Your colors. Ready to buy.",
   },
 ];
 
@@ -52,7 +52,7 @@ const FEATURES = [
     label: "Smart scoring",
     title: "500 new arrivals. 50 that actually work for you.",
     description:
-      "Every week, we scan new inventory across three brands. Each item is scored 0-100 on color match, silhouette, fabric, climate suitability, and style personality. You only see products scoring 60+. Great matches are flagged instantly.",
+      "Every week, we scan new inventory across all your brands. Each item is scored 0-100 on color match, silhouette, fabric, climate suitability, and style personality. You only see products scoring 60+. Great matches are flagged instantly.",
     detail: "5-dimension scoring across color, fit, fabric, weather, style",
     icon: "score",
   },
@@ -77,7 +77,7 @@ const FEATURES = [
 const STATS = [
   { value: "12-season", label: "color analysis" },
   { value: "100+", label: "products scored" },
-  { value: "3 brands", label: "one curated feed" },
+  { value: "10+ brands", label: "one curated feed" },
   { value: "5 min", label: "to set up" },
 ];
 
@@ -88,7 +88,7 @@ const FAQ = [
   },
   {
     q: "Which brands do you shop from?",
-    a: "Currently Zara, Uniqlo, and Quince. We chose these for their range of styles, consistent quality at accessible prices, and frequent new arrivals. More brands coming soon.",
+    a: "We shop from Zara, H&M, Mango, COS, & Other Stories, Massimo Dutti, Uniqlo, Quince, Aritzia, Everlane, and more. We focus on brands with great style, consistent quality, and frequent new arrivals.",
   },
   {
     q: "How accurate is the AI scoring?",
@@ -245,7 +245,7 @@ export default function LandingPage() {
           </h1>
           <p className="mt-6 text-lg md:text-xl text-stone-300 leading-relaxed max-w-2xl mx-auto font-light">
             Upload two photos. Answer a few questions. Get a curated wardrobe
-            from Zara, Uniqlo, and Quince — scored for your coloring, body
+            from your favorite brands — scored for your coloring, body
             shape, and style.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -373,11 +373,11 @@ export default function LandingPage() {
           <p className="text-sm font-medium tracking-widest uppercase text-stone-400 mb-8">
             Curated from brands you know
           </p>
-          <div className="flex items-center justify-center gap-12 md:gap-20">
-            {["Zara", "Uniqlo", "Quince"].map((brand) => (
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:gap-x-16">
+            {["Zara", "Uniqlo", "Quince", "H&M", "Mango", "COS", "& Other Stories", "Massimo Dutti", "Aritzia", "Everlane"].map((brand) => (
               <span
                 key={brand}
-                className="font-serif text-2xl md:text-3xl text-stone-300 hover:text-stone-500 transition-colors"
+                className="font-serif text-xl md:text-2xl text-stone-300 hover:text-stone-500 transition-colors"
               >
                 {brand}
               </span>
@@ -494,7 +494,7 @@ export default function LandingPage() {
             Your Stylist
           </span>
           <p className="text-sm text-stone-400">
-            AI-powered personal styling. Currently shopping Zara, Uniqlo, and Quince.
+            AI-powered personal styling. Shopping the brands you love.
           </p>
         </div>
       </footer>
