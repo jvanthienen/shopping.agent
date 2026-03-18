@@ -1,7 +1,9 @@
+import { StyleProfile } from "./types";
+
 // Josefina's style profile — extracted from Manual de Estilo by Nova Presencia (Danisa Bevcic)
 // Comprehensive profile covering colorimetry, body shape, Sport personality, and capsule wardrobe
 
-export const styleProfile = {
+export const DEFAULT_STYLE_PROFILE: StyleProfile = {
   colorSeason: "Verano Suave (Soft Summer)",
   contrast: "Medium Cold — desaturated, muted tones with cool blue/gray undertones",
   skinUndertone: "Falsa cálida — olive skin with yellowish undertone that needs specific colors to prevent it from showing through",
@@ -324,6 +326,17 @@ export const styleProfile = {
     "Monochromatic suit (blazer + matching pants) in palette color (Power Sport)",
   ],
 
+  // Sizes (US sizing)
+  sizes: {
+    tops: ["S", "M"],
+    jeans: ["26", "28"],
+    pants: ["6", "8"],
+    dresses: ["S", "M"],
+    shoes: ["7.5"],
+    outerwear: ["S", "M"],
+    skirts: ["S", "M"],
+  },
+
   // Location & climate
   location: "San Francisco, CA",
   climate: "Year-round mild & chilly (50-65°F / 10-18°C), layers are essential",
@@ -381,7 +394,84 @@ export const styleProfile = {
     denim jackets, V-neck sweaters, casual blazers, sneakers, wrap tops
 
     Only recommend products scoring 60+. Flag as "great match" if 80+.
+
+    SIZE FILTERING (mandatory — do NOT skip):
+    Before scoring, check if the product is available in the user's size.
+    Use the user's sizes from the profile (tops S/M, jeans 26/28, pants 6/8, dresses S/M, shoes 7.5, outerwear S/M).
+    Map the product category to the right size type:
+    - blouses/tops/sweaters → tops sizes (S, M)
+    - jeans → jeans sizes (26, 28)
+    - pants → pants sizes (6, 8)
+    - dresses → dresses sizes (S, M)
+    - shoes → shoes sizes (7.5)
+    - outerwear/blazers → outerwear sizes (S, M)
+    - skirts → skirts sizes (S, M)
+    If NONE of the user's sizes are in stock, SKIP the product entirely (score = 0).
+    Store the user's matching size in the "selectedSize" field.
+    Use get_product_sizes(product_id) to check size availability per color variant.
+    Match sizes flexibly: "26 (US 2)" matches user size "26", "S" matches "S", etc.
   `,
 };
 
-export type StyleProfile = typeof styleProfile;
+const STORAGE_KEY = "styleProfile";
+
+// --- Local cache (localStorage) for fast reads ---
+
+export function getStyleProfile(): StyleProfile {
+  if (typeof window === "undefined") return DEFAULT_STYLE_PROFILE;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored) as StyleProfile;
+  } catch {}
+  return DEFAULT_STYLE_PROFILE;
+}
+
+export function saveStyleProfileLocal(profile: StyleProfile): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+}
+
+export function hasStyleProfile(): boolean {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(STORAGE_KEY) !== null;
+}
+
+// --- Supabase persistence ---
+
+import { createClient } from "./supabase/client";
+
+export async function saveStyleProfile(profile: StyleProfile): Promise<void> {
+  // Always save locally for fast reads
+  saveStyleProfileLocal(profile);
+
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  await supabase
+    .from("style_profiles")
+    .upsert({
+      user_id: user.id,
+      profile: profile,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "user_id" });
+}
+
+export async function loadStyleProfileFromSupabase(): Promise<StyleProfile | null> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data, error } = await supabase
+    .from("style_profiles")
+    .select("profile")
+    .eq("user_id", user.id)
+    .single();
+
+  if (error || !data) return null;
+
+  // Cache locally
+  const profile = data.profile as StyleProfile;
+  saveStyleProfileLocal(profile);
+  return profile;
+}

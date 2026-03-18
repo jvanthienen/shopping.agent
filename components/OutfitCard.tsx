@@ -71,7 +71,7 @@ export default function OutfitCard({ outfit, onSaveOutfit, onSwapItem }: Props) 
               className="min-w-0 flex-1"
             >
               <p className="text-stone-700 truncate text-[13px]">{item.name}</p>
-              <p className="text-[11px] text-stone-400">{[item.color, item.brand].filter(Boolean).join(" · ")}</p>
+              <p className="text-[11px] text-stone-400">{[item.color, item.selectedSize ? `Size ${item.selectedSize}` : null, item.brand].filter(Boolean).join(" · ")}</p>
             </a>
             <div className="flex items-center gap-2.5 ml-3 shrink-0">
               <p className="text-stone-800 font-semibold text-[13px]">{item.price}</p>

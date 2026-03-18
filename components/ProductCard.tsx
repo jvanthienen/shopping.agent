@@ -46,8 +46,21 @@ export default function ProductCard({ product, onLike, onSkip, skipLabel }: Prop
       <div className="p-3.5 flex flex-col flex-1 h-[180px]">
         <p className="text-[11px] text-stone-400 uppercase tracking-wider">{product.category}</p>
         <h3 className="text-sm font-medium text-stone-800 leading-snug line-clamp-2 mt-1">{product.name}</h3>
-        {product.color && (
-          <p className="text-xs text-stone-400 mt-0.5">{product.color}</p>
+        {(product.color || product.selectedSize) && (
+          <p className="text-xs text-stone-400 mt-0.5">
+            {product.color}
+            {product.color && product.selectedSize && " · "}
+            {product.selectedSize && (
+              <span className="text-stone-500 font-medium">Size {product.selectedSize}</span>
+            )}
+            {product.selectedSize &&
+              product.availableSizes &&
+              !product.availableSizes.some(
+                (s) => s.name === product.selectedSize && s.inStock
+              ) && (
+                <span className="text-amber-500 text-[10px] ml-1">(check stock)</span>
+              )}
+          </p>
         )}
         <p className="text-stone-900 font-semibold text-[15px] mt-auto">{product.price}</p>
 

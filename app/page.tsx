@@ -5,6 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import OutfitCard from "@/components/OutfitCard";
 import Cart from "@/components/Cart";
 import { Product, Outfit } from "@/lib/types";
+import { hasStyleProfile, loadStyleProfileFromSupabase } from "@/lib/styleProfile";
+import Link from "next/link";
 
 type Tab = "outfits" | "basics" | "pieces" | "skipped";
 const CATEGORIES = ["all", "outerwear", "blazers", "blouses", "dresses", "jeans", "pants", "skirts", "shoes", "accessories"] as const;
@@ -55,6 +57,18 @@ export default function Home() {
   const [showAllPieces, setShowAllPieces] = useState(false);
   const [sectionIndex, setSectionIndex] = useState<Record<string, number>>({});
   const [stats, setStats] = useState<{ total: number; curated: number; location?: string } | null>(null);
+  const [profileExists, setProfileExists] = useState(true); // default true to avoid flash
+
+  useEffect(() => {
+    // Check localStorage first (fast), then Supabase (authoritative)
+    if (hasStyleProfile()) {
+      setProfileExists(true);
+    } else {
+      loadStyleProfileFromSupabase().then((profile) => {
+        setProfileExists(!!profile);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     fetch("/products.json")
@@ -202,6 +216,26 @@ export default function Home() {
   for (const p of feedProducts) {
     const b = p.brand ?? "Other";
     brandCounts[b] = (brandCounts[b] ?? 0) + 1;
+  }
+
+  // If no profile, show onboarding
+  if (!profileExists) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center px-6">
+        <div className="max-w-md text-center">
+          <h1 className="font-serif text-4xl text-stone-900 mb-4">Welcome to Your Personal Shopper</h1>
+          <p className="text-stone-500 text-lg leading-relaxed mb-8">
+            Let&apos;s build your style profile so we can curate the perfect pieces for you.
+          </p>
+          <Link
+            href="/profile"
+            className="inline-block px-10 py-4 bg-stone-900 text-white rounded-full text-base font-medium hover:bg-stone-800 transition-all active:scale-[0.97] shadow-sm"
+          >
+            Create My Profile
+          </Link>
+        </div>
+      </main>
+    );
   }
 
   return (

@@ -79,7 +79,13 @@ export default function Cart({ items, onRemove, onClose }: Props) {
                   </a>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-stone-800 leading-snug line-clamp-2">{item.name}</p>
-                    {item.color && <p className="text-[11px] text-stone-400 mt-0.5">{item.color}</p>}
+                    {(item.color || item.selectedSize) && (
+                      <p className="text-[11px] text-stone-400 mt-0.5">
+                        {item.color}
+                        {item.color && item.selectedSize && " · "}
+                        {item.selectedSize && <span className="font-medium">Size {item.selectedSize}</span>}
+                      </p>
+                    )}
                     <p className="text-sm font-semibold text-stone-900 mt-1">{item.price}</p>
                     <a
                       href={item.productUrl}
