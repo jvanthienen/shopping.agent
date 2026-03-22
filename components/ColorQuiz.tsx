@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AdaptiveQuestion } from "@/lib/types";
 import { FALLBACK_ADAPTIVE_QUESTIONS } from "@/lib/prompts";
+import { extractColorsFromText } from "@/lib/colorUtils";
 
 interface ColorQuizProps {
   questions?: AdaptiveQuestion[];
@@ -21,6 +22,7 @@ export default function ColorQuiz({ questions, initialAnswers, onComplete, isLoa
     return firstUnanswered === -1 ? activeQuestions.length - 1 : firstUnanswered;
   });
   const [answers, setAnswers] = useState<Record<string, string>>(initialAnswers);
+  const lastSelectTime = useRef(0);
 
   // Auto-advance when loading resolves and we already have some answers
   useEffect(() => {
@@ -42,8 +44,8 @@ export default function ColorQuiz({ questions, initialAnswers, onComplete, isLoa
       <div className="flex flex-col items-center justify-center min-h-screen px-6">
         <div className="max-w-sm text-center">
           <div className="w-12 h-12 mx-auto mb-6 relative">
-            <div className="absolute inset-0 rounded-full border-2 border-stone-200" />
-            <div className="absolute inset-0 rounded-full border-2 border-stone-600 border-t-transparent animate-spin" />
+            <div className="absolute inset-0 rounded-full border-2 border-[#E8E2D8]" />
+            <div className="absolute inset-0 rounded-full border-2 border-stone-700 border-t-transparent animate-spin" />
           </div>
           <h2 className="font-serif text-xl text-stone-900 mb-2">Analyzing your photos</h2>
           <p className="text-stone-400 text-sm">Preparing personalized color questions...</p>
@@ -56,6 +58,9 @@ export default function ColorQuiz({ questions, initialAnswers, onComplete, isLoa
   if (!question) return null;
 
   const handleSelect = (value: string) => {
+    if (Date.now() - lastSelectTime.current < 500) return;
+    lastSelectTime.current = Date.now();
+
     const newAnswers = { ...answers, [question.id]: value };
     setAnswers(newAnswers);
 
@@ -90,7 +95,7 @@ export default function ColorQuiz({ questions, initialAnswers, onComplete, isLoa
           <div
             key={i}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === currentIdx ? "w-8 bg-stone-700" : i < currentIdx ? "w-4 bg-stone-400" : "w-4 bg-stone-200"
+              i === currentIdx ? "w-8 bg-stone-700" : i < currentIdx ? "w-4 bg-stone-400" : "w-4 bg-[#E8E2D8]"
             }`}
           />
         ))}
@@ -101,24 +106,115 @@ export default function ColorQuiz({ questions, initialAnswers, onComplete, isLoa
           {question.question}
         </h2>
 
-        <div className="space-y-3">
-          {question.options.map((option) => {
-            const isSelected = answers[question.id] === option.value;
+        {(() => {
+          const colorOptions = question.options.map((opt) => ({
+            ...opt,
+            colors: extractColorsFromText(opt.label),
+          }));
+          const hasAnyColors = colorOptions.some((o) => o.colors.length > 0);
+
+          if (!hasAnyColors) {
+            // Text-only fallback (no color keywords found)
             return (
+              <div className="space-y-3">
+                {question.options.map((option) => {
+                  const isSelected = answers[question.id] === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => handleSelect(option.value)}
+                      className={`w-full text-left px-5 py-4 rounded-2xl border-2 transition-all ${
+                        isSelected
+                          ? "border-stone-700 bg-stone-800 text-white shadow-sm"
+                          : "border-stone-200 bg-white text-stone-700 hover:border-stone-300 hover:bg-stone-50"
+                      }`}
+                    >
+                      <span className="text-sm font-medium">{option.label}</span>
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => handleSelect("unsure")}
+                  className={`w-full text-center px-5 py-3 transition-all ${
+                    answers[question.id] === "unsure"
+                      ? "text-stone-700 font-medium"
+                      : "text-stone-400 hover:text-stone-600"
+                  }`}
+                >
+                  <span className="text-sm">I&apos;m not sure</span>
+                </button>
+              </div>
+            );
+          }
+
+          // Split into swatch options vs text-only options
+          const swatchOpts = colorOptions.filter((o) => o.colors.length > 0);
+          const textOpts = colorOptions.filter((o) => o.colors.length === 0);
+
+          return (
+            <div className="space-y-3">
+              <div className="flex flex-wrap justify-center gap-3">
+                {swatchOpts.map((option) => {
+                  const isSelected = answers[question.id] === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => handleSelect(option.value)}
+                      className={`flex flex-col items-center gap-3 px-4 py-5 rounded-2xl border-2 transition-all w-[calc(50%-0.375rem)] ${
+                        isSelected
+                          ? "border-stone-700 bg-stone-800 text-white shadow-sm"
+                          : "border-stone-200 bg-white text-stone-700 hover:border-stone-300 hover:bg-stone-50"
+                      }`}
+                    >
+                      <div className="flex gap-1.5">
+                        {option.colors.map((hex, i) => (
+                          <span
+                            key={i}
+                            className="w-8 h-8 rounded-full shadow-sm border border-stone-200"
+                            style={{ backgroundColor: hex }}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-sm font-medium text-center leading-tight">{option.label}</span>
+                      {isSelected && (
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              {textOpts.map((option) => {
+                const isSelected = answers[question.id] === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    onClick={() => handleSelect(option.value)}
+                    className={`w-full text-left px-5 py-4 rounded-2xl border-2 transition-all ${
+                      isSelected
+                        ? "border-stone-700 bg-stone-800 text-white shadow-sm"
+                        : "border-stone-200 bg-white text-stone-700 hover:border-stone-300 hover:bg-stone-50"
+                    }`}
+                  >
+                    <span className="text-sm font-medium">{option.label}</span>
+                  </button>
+                );
+              })}
+              {/* I don't know option */}
               <button
-                key={option.value}
-                onClick={() => handleSelect(option.value)}
-                className={`w-full text-left px-5 py-4 rounded-2xl border-2 transition-all ${
-                  isSelected
-                    ? "border-stone-700 bg-stone-800 text-white shadow-sm"
-                    : "border-stone-200 bg-white text-stone-700 hover:border-stone-300 hover:bg-stone-50"
+                onClick={() => handleSelect("unsure")}
+                className={`w-full text-center px-5 py-3 transition-all ${
+                  answers[question.id] === "unsure"
+                    ? "text-stone-700 font-medium"
+                    : "text-stone-400 hover:text-stone-600"
                 }`}
               >
-                <span className="text-sm font-medium">{option.label}</span>
+                <span className="text-sm">I&apos;m not sure</span>
               </button>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

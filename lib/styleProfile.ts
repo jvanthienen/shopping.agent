@@ -4,6 +4,8 @@ import { StyleProfile } from "./types";
 // Comprehensive profile covering colorimetry, body shape, Sport personality, and capsule wardrobe
 
 export const DEFAULT_STYLE_PROFILE: StyleProfile = {
+  firstName: "",
+  gender: "women",
   colorSeason: "Verano Suave (Soft Summer)",
   contrast: "Medium Cold — desaturated, muted tones with cool blue/gray undertones",
   skinUndertone: "Falsa cálida — olive skin with yellowish undertone that needs specific colors to prevent it from showing through",

@@ -1,28 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import OutfitCard from "@/components/OutfitCard";
+import SkeletonCard from "@/components/SkeletonCard";
 import Cart from "@/components/Cart";
 import { Product, Outfit } from "@/lib/types";
 import { hasStyleProfile, getStyleProfile, loadStyleProfileFromSupabase } from "@/lib/styleProfile";
+import { StyleProfile } from "@/lib/types";
+import { rankProducts, CatalogProduct } from "@/lib/productMatcher";
+import { createClient } from "@/lib/supabase/client";
+import ProfilePanel from "@/components/ProfilePanel";
+import AuthOverlay from "@/components/AuthOverlay";
 import Link from "next/link";
 
 type Tab = "outfits" | "basics" | "pieces" | "skipped";
 const CATEGORIES = ["all", "outerwear", "blazers", "blouses", "dresses", "jeans", "pants", "skirts", "shoes", "accessories"] as const;
-type Category = (typeof CATEGORIES)[number];
-const BRANDS = ["all", "Zara", "Uniqlo", "Quince"] as const;
-type Brand = (typeof BRANDS)[number];
 
-interface BasicProduct extends Product {
-  basicRole?: string;
+// Match a single outfit piece description to a catalog product
+function matchOutfitPiece(piece: string, catalog: Product[]): Product | null {
+  const lower = piece.toLowerCase().trim();
+  const skip = new Set(["in", "and", "a", "the", "of", "with", "for"]);
+  const words = lower.split(/[\s,/]+/).filter((w) => w.length > 2 && !skip.has(w));
+
+  let best: Product | null = null;
+  let bestScore = 0;
+  for (const p of catalog) {
+    const pName = p.name.toLowerCase();
+    const pCat = (p.category ?? "").toLowerCase();
+    const pColor = (p.color ?? "").toLowerCase();
+    let score = 0;
+    for (const w of words) {
+      if (pName.includes(w)) score += 2;
+      if (pCat.includes(w)) score += 1;
+      if (pColor.includes(w)) score += 1;
+    }
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return bestScore >= 2 ? best : null;
 }
+type Category = (typeof CATEGORIES)[number];
 
 // Wardrobe sections — each defines a filter to find matching products from the catalog
 const WARDROBE_SECTIONS = [
   { key: "white-shirts", label: "White shirts & tees", match: (p: Product) => {
     const n = p.name.toLowerCase(); const c = (p.color ?? "").toLowerCase();
-    return p.category === "blouses" && (c.includes("white") || c.includes("ivory") || c.includes("ecru") || c.includes("off white")) && (n.includes("shirt") || n.includes("blouse") || n.includes("tee") || n.includes("t-shirt") || n.includes("tank") || n.includes("cami"));
+    return p.category === "blouses" && (c.includes("white") || c.includes("ivory") || c.includes("ecru") || c.includes("off white") || n.includes("white")) && (n.includes("shirt") || n.includes("blouse") || n.includes("tee") || n.includes("t-shirt") || n.includes("tank") || n.includes("cami"));
   }},
   { key: "silk-tops", label: "Silk & elegant tops", match: (p: Product) => {
     const n = p.name.toLowerCase();
@@ -30,7 +53,11 @@ const WARDROBE_SECTIONS = [
   }},
   { key: "sweaters", label: "Sweaters & knits", match: (p: Product) => {
     const n = p.name.toLowerCase();
-    return p.category === "blouses" && (n.includes("sweater") || n.includes("knit") || n.includes("cardigan") || n.includes("pullover"));
+    return p.category === "blouses" && (n.includes("sweater") || n.includes("knit") || n.includes("cardigan") || n.includes("pullover") || n.includes("cashmere"));
+  }},
+  { key: "tops-other", label: "Tops", match: (p: Product) => {
+    const n = p.name.toLowerCase();
+    return p.category === "blouses" && !n.includes("silk") && !n.includes("satin") && !n.includes("sweater") && !n.includes("knit") && !n.includes("cardigan") && !n.includes("pullover") && !n.includes("cashmere");
   }},
   { key: "blazers", label: "Blazers & structured jackets", match: (p: Product) => p.category === "blazers" },
   { key: "outerwear", label: "Jackets & coats", match: (p: Product) => p.category === "outerwear" },
@@ -43,152 +70,177 @@ const WARDROBE_SECTIONS = [
 ] as const;
 
 export default function Home() {
-  const [products, setProducts] = useState<Product[]>([]);
+  // Products from static catalog
+  const [allCatalogProducts, setAllCatalogProducts] = useState<Product[]>([]);
   const [outfits, setOutfits] = useState<Outfit[]>([]);
-  const [basics, setBasics] = useState<BasicProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const catalogLoaded = useRef(false);
+
+  // UI state
   const [saved, setSaved] = useState<Product[]>([]);
   const [skipped, setSkipped] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("basics");
   const [category, setCategory] = useState<Category>("all");
-  const [brand, setBrand] = useState<Brand>("all");
+  const [brand, setBrand] = useState<string>("all");
   const [showAllPieces, setShowAllPieces] = useState(false);
   const [sectionIndex, setSectionIndex] = useState<Record<string, number>>({});
-  const [stats, setStats] = useState<{ total: number; curated: number; location?: string } | null>(null);
-  const [profileExists, setProfileExists] = useState(true); // default true to avoid flash
-  const [capsuleProducts, setCapsuleProducts] = useState<{ name: string; price: string; imageUrl: string; productUrl: string; brand: string }[]>([]);
-  const [capsuleDismissed, setCapsuleDismissed] = useState(false);
+  const [profileExists, setProfileExists] = useState(true);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [profile, setProfile] = useState<StyleProfile | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [showAuthOverlay, setShowAuthOverlay] = useState(false);
+  const [authBannerDismissed, setAuthBannerDismissed] = useState(false);
+
+  // --- Auth check ---
 
   useEffect(() => {
-    // Check localStorage first (fast), then Supabase (authoritative)
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsAuthenticated(!!user);
+    });
+  }, []);
+
+  const showAuthBanner = isAuthenticated === false && !authBannerDismissed;
+
+  // --- Profile loading ---
+
+  useEffect(() => {
     if (hasStyleProfile()) {
       setProfileExists(true);
+      setProfile(getStyleProfile());
     } else {
-      loadStyleProfileFromSupabase().then((profile) => {
-        setProfileExists(!!profile);
+      loadStyleProfileFromSupabase().then((loaded) => {
+        setProfileExists(!!loaded);
+        if (loaded) setProfile(loaded);
       });
     }
   }, []);
 
-  useEffect(() => {
-    if (!profileExists) return;
-    const profile = getStyleProfile();
-    if (!profile.capsuleWardrobe) return;
-    fetch("/api/lookbook-products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ capsuleWardrobe: profile.capsuleWardrobe }),
-    })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (!data?.capsule) return;
-        const all = Object.values(data.capsule as Record<string, { name: string; price: string; imageUrl: string; productUrl: string; brand: string }[]>)
-          .flat()
-          .filter((p) => p.imageUrl);
-        setCapsuleProducts(all.slice(0, 12));
-      })
-      .catch(() => {});
-  }, [profileExists]);
+  // --- Load static product catalog on mount ---
+
+  const [rawCatalog, setRawCatalog] = useState<Product[]>([]);
 
   useEffect(() => {
+    if (catalogLoaded.current) return;
+    catalogLoaded.current = true;
+
     fetch("/products.json")
-      .then((r) => {
-        if (!r.ok) throw new Error("No products yet — run a refresh first");
-        return r.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        setProducts(data.products ?? []);
-        setOutfits(data.outfits ?? []);
-        setBasics(data.basics ?? []);
-        setStats({ total: data.total ?? 0, curated: data.curated ?? 0, location: data.location });
+        setRawCatalog((data.products ?? []) as Product[]);
       })
-      .catch((e) => setError(e.message))
+      .catch(() => { /* products.json unavailable */ })
       .finally(() => setLoading(false));
   }, []);
+
+  // Score catalog against profile — personalized ranking, filtered to preferred brands
+  useEffect(() => {
+    if (rawCatalog.length === 0) return;
+    if (!profile) {
+      // No profile — show all products unscored
+      setAllCatalogProducts(rawCatalog);
+      return;
+    }
+
+    // Filter to preferred brands first (if any selected)
+    const preferred = profile.preferredBrands;
+    let filtered = rawCatalog;
+    if (preferred && preferred.length > 0) {
+      const preferredSet = new Set(preferred.map((b: string) => b.toLowerCase()));
+      filtered = rawCatalog.filter((p) => preferredSet.has((p.brand ?? "").toLowerCase()));
+    }
+
+    // Score remaining products and filter to 40+ (removes poor matches)
+    const scored = rankProducts(
+      filtered as unknown as CatalogProduct[],
+      profile,
+      { minScore: 40 }
+    );
+
+    // Convert back to Product type (compatible fields)
+    const asProducts: Product[] = scored.map((sp) => ({
+      id: sp.id,
+      name: sp.name,
+      price: sp.price,
+      color: sp.color,
+      category: sp.category,
+      brand: sp.brand,
+      imageUrl: sp.imageUrl,
+      productUrl: sp.productUrl,
+      score: sp.score,
+      matchReason: sp.matchReason,
+      isGreatMatch: sp.isGreatMatch,
+    }));
+
+    setAllCatalogProducts(asProducts);
+  }, [rawCatalog, profile]);
+
+  // Generate outfits from profile formulas + local catalog
+  useEffect(() => {
+    if (allCatalogProducts.length === 0 || !profile?.outfitFormulas?.length) return;
+
+    const generatedOutfits: Outfit[] = [];
+    const usedProductIds = new Set<string>();
+
+    for (const formula of profile.outfitFormulas.slice(0, 8)) {
+      const cleanFormula = formula.replace(/\s*\([^)]*\)\s*$/, "");
+      const vibe = (formula.match(/\(([^)]+)\)$/) || [])[1] || "";
+      const pieces = cleanFormula.split(/\s*\+\s*/).filter(Boolean);
+
+      const items: Product[] = [];
+      for (const piece of pieces) {
+        const match = matchOutfitPiece(piece, allCatalogProducts.filter((p) => !usedProductIds.has(p.id)));
+        if (match) {
+          items.push(match);
+          usedProductIds.add(match.id);
+        }
+      }
+
+      if (items.length >= 2) {
+        const total = items.reduce((sum, i) => sum + parseFloat(i.price.replace("$", "") || "0"), 0);
+        generatedOutfits.push({
+          id: `outfit-${generatedOutfits.length}-${Date.now()}`,
+          name: cleanFormula.length > 50 ? cleanFormula.slice(0, 47) + "..." : cleanFormula,
+          vibe,
+          items,
+          totalPrice: `$${total.toFixed(2)}`,
+        });
+      }
+    }
+
+    setOutfits(generatedOutfits);
+  }, [allCatalogProducts, profile]);
+
+  // --- Derived data ---
+
+  const brandSet = new Set(allCatalogProducts.map((p) => p.brand).filter(Boolean));
+  const greatMatchCount = allCatalogProducts.filter((p) => p.isGreatMatch).length;
+  const statsText = allCatalogProducts.length > 0
+    ? `${allCatalogProducts.length} picks from ${brandSet.size} brands${greatMatchCount > 0 ? ` · ${greatMatchCount} great matches` : ""}`
+    : null;
+
+  // --- Handlers ---
 
   const handleLike = (product: Product) => {
     setSaved((prev) => (prev.find((p) => p.id === product.id) ? prev : [...prev, product]));
   };
 
-  const handleSaveAll = (items: Product[]) => {
-    setSaved((prev) => {
-      const newItems = items.filter((item) => !prev.find((p) => p.id === item.id));
-      return [...prev, ...newItems];
-    });
-  };
-
   const handleSkip = (product: Product) => {
     setSkipped((prev) => (prev.find((p) => p.id === product.id) ? prev : [...prev, product]));
-    setProducts((prev) => prev.filter((p) => p.id !== product.id));
   };
 
   const handleRemoveFromCart = (id: string) => {
     setSaved((prev) => prev.filter((p) => p.id !== id));
   };
 
-  // Track all product IDs already used in any outfit to avoid repeats
-  const usedInOutfits = new Set(outfits.flatMap((o) => o.items.map((i) => i.id)));
-
-  const generateSimilarOutfit = (original: Outfit): Outfit | null => {
-    // Build a new outfit with the same category structure but different products
-    const categories = original.items.map((i) => i.category ?? "blouses");
-    const excludeIds = new Set([
-      ...original.items.map((i) => i.id),
-      ...saved.map((s) => s.id),
-      ...usedInOutfits,
-    ]);
-
-    const newItems: Product[] = [];
-    for (const cat of categories) {
-      const candidate = products.find(
-        (p) => p.category === cat && !excludeIds.has(p.id) && p.imageUrl
-      );
-      if (!candidate) return null; // can't fill this slot
-      newItems.push(candidate);
-      excludeIds.add(candidate.id);
-    }
-
-    const newTotal = newItems
-      .reduce((sum, i) => sum + parseFloat(i.price.replace("$", "") || "0"), 0)
-      .toFixed(2);
-
-    const suffixes = ["II", "III", "IV", "V", "VI", "VII"];
-    const baseName = original.name.replace(/\s+(II|III|IV|V|VI|VII)$/, "");
-    let newName = baseName;
-    for (const s of suffixes) {
-      const tryName = `${baseName} ${s}`;
-      if (!outfits.some((o) => o.name === tryName)) {
-        newName = tryName;
-        break;
-      }
-    }
-
-    return {
-      id: `${original.id}-${Date.now()}`,
-      name: newName,
-      vibe: original.vibe,
-      items: newItems,
-      totalPrice: `$${newTotal}`,
-    };
-  };
-
   const handleSaveOutfit = (outfit: Outfit) => {
-    // Save items to cart
     setSaved((prev) => {
       const newItems = outfit.items.filter((item) => !prev.find((p) => p.id === item.id));
       return [...prev, ...newItems];
     });
-
-    // Replace with a new outfit of the same theme
-    const newOutfit = generateSimilarOutfit(outfit);
-    if (newOutfit) {
-      setOutfits((prev) => prev.map((o) => (o.id === outfit.id ? newOutfit : o)));
-    } else {
-      // No more alternatives — remove the slot
-      setOutfits((prev) => prev.filter((o) => o.id !== outfit.id));
-    }
+    // Remove the outfit (no static product pool to generate alternatives from)
+    setOutfits((prev) => prev.filter((o) => o.id !== outfit.id));
   };
 
   const handleSwapItem = (outfitId: string, itemToReplace: Product) => {
@@ -196,7 +248,8 @@ export default function Home() {
       prev.map((outfit) => {
         if (outfit.id !== outfitId) return outfit;
         const usedIds = new Set(outfit.items.map((i) => i.id));
-        const replacement = products.find(
+        const pool = allCatalogProducts;
+        const replacement = pool.find(
           (p) =>
             p.category === itemToReplace.category &&
             !usedIds.has(p.id) &&
@@ -214,7 +267,9 @@ export default function Home() {
     );
   };
 
-  const feedProducts = products.filter(
+  // --- Filtering for Pieces / Skipped tabs ---
+
+  const feedProducts = allCatalogProducts.filter(
     (p) => !skipped.find((s) => s.id === p.id) && !saved.find((s) => s.id === p.id)
   );
 
@@ -234,11 +289,26 @@ export default function Home() {
     categoryCounts[cat] = (categoryCounts[cat] ?? 0) + 1;
   }
 
-  const brandCounts: Record<string, number> = { all: feedProducts.length };
+  const pieceBrandCounts: Record<string, number> = { all: feedProducts.length };
   for (const p of feedProducts) {
     const b = p.brand ?? "Other";
-    brandCounts[b] = (brandCounts[b] ?? 0) + 1;
+    pieceBrandCounts[b] = (pieceBrandCounts[b] ?? 0) + 1;
   }
+  const brandList = ["all", ...Object.keys(pieceBrandCounts).filter((b) => b !== "all").sort()];
+
+  // Tab counts
+  const capsuleCount = loading ? "..." : allCatalogProducts.length;
+  const outfitsCount = loading ? "..." : outfits.length;
+  const piecesCount = loading ? "..." : allCatalogProducts.length;
+
+  // --- Skeleton grid ---
+  const SkeletonGrid = ({ count = 8 }: { count?: number }) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {Array.from({ length: count }).map((_, i) => (
+        <SkeletonCard key={i} />
+      ))}
+    </div>
+  );
 
   // If no profile, show onboarding
   if (!profileExists) {
@@ -263,18 +333,31 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-lg border-b border-stone-200/60">
+      <header className="sticky top-0 z-40 bg-[#F5F0E8]/95 backdrop-blur-lg border-b border-stone-200/60">
         <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
           <div>
             <h1 className="font-serif text-2xl tracking-tight text-stone-900">Your Shopper</h1>
-            {stats && (
+            {statsText && (
               <p className="text-[11px] text-stone-400 mt-0.5 tracking-wide uppercase">
-                {stats.curated} curated picks
-                {stats.location && <span className="text-stone-300"> &middot; </span>}
-                {stats.location}
+                {statsText}
               </p>
             )}
           </div>
+          <div className="flex items-center gap-3">
+          {profile && (
+            <button
+              onClick={() => setProfileOpen(true)}
+              className="w-9 h-9 rounded-full bg-stone-200 text-stone-600 text-sm font-semibold flex items-center justify-center hover:bg-stone-300 transition-colors"
+              title="Your profile"
+            >
+              {profile.firstName ? profile.firstName.charAt(0).toUpperCase() : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              )}
+            </button>
+          )}
           <button
             onClick={() => setCartOpen(true)}
             className="relative flex items-center gap-2.5 px-5 py-2.5 bg-stone-900 text-white rounded-full text-sm font-medium hover:bg-stone-800 transition-all active:scale-[0.97]"
@@ -289,14 +372,15 @@ export default function Home() {
               </span>
             )}
           </button>
+          </div>
         </div>
 
         {/* Tabs */}
         <div className="max-w-6xl mx-auto px-5 pb-3 flex gap-6 overflow-x-auto no-scrollbar">
           {[
-            { key: "basics" as Tab, label: "Wardrobe Capsule", count: basics.length },
-            { key: "outfits" as Tab, label: "Outfits", count: outfits.length },
-            { key: "pieces" as Tab, label: "All Pieces", count: feedProducts.length },
+            { key: "basics" as Tab, label: "Wardrobe Capsule", count: capsuleCount },
+            { key: "outfits" as Tab, label: "Outfits", count: outfitsCount },
+            { key: "pieces" as Tab, label: "All Pieces", count: piecesCount },
             { key: "skipped" as Tab, label: "Skipped", count: skipped.length },
           ].map((t) => (
             <button
@@ -317,43 +401,30 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Capsule Essentials */}
-      {capsuleProducts.length > 0 && !capsuleDismissed && (
-        <div className="max-w-6xl mx-auto px-5 pt-5">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h2 className="font-serif text-lg text-stone-900">Your Capsule Essentials</h2>
-              <p className="text-stone-400 text-xs">Based on your style profile</p>
-            </div>
-            <button
-              onClick={() => setCapsuleDismissed(true)}
-              className="text-stone-300 hover:text-stone-500 transition-colors text-lg leading-none"
-              aria-label="Dismiss capsule section"
-            >
-              &times;
-            </button>
-          </div>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-3">
-            {capsuleProducts.map((p, i) => (
-              <a
-                key={i}
-                href={p.productUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 w-32 group"
+      {/* Sign-in banner for unauthenticated users */}
+      {showAuthBanner && (
+        <div className="bg-[#EDE8DF]/80 border-b border-stone-200/40">
+          <div className="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
+            <p className="text-stone-500 text-sm">
+              Sign in to save your profile and favorites across devices
+            </p>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setShowAuthOverlay(true)}
+                className="px-4 py-1.5 bg-stone-900 text-white rounded-full text-sm font-medium hover:bg-stone-800 transition-colors"
               >
-                <div className="aspect-[3/4] bg-stone-100 rounded-xl overflow-hidden mb-1.5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.imageUrl}
-                    alt={p.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <p className="text-stone-700 text-[11px] truncate">{p.name}</p>
-                <p className="text-stone-400 text-[10px]">{p.brand} &middot; {p.price}</p>
-              </a>
-            ))}
+                Sign in
+              </button>
+              <button
+                onClick={() => setAuthBannerDismissed(true)}
+                className="text-stone-300 hover:text-stone-500 transition-colors p-1"
+                aria-label="Dismiss"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -362,8 +433,8 @@ export default function Home() {
       {(tab === "pieces" || tab === "skipped") && (
         <div className="max-w-6xl mx-auto px-5 pt-5 space-y-3">
           <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-            {BRANDS.map((b) => {
-              const count = brandCounts[b] ?? 0;
+            {brandList.map((b) => {
+              const count = pieceBrandCounts[b] ?? 0;
               return (
                 <button
                   key={b}
@@ -390,7 +461,7 @@ export default function Home() {
                 className={`shrink-0 px-3 py-1 rounded-full text-xs transition-all ${
                   category === cat
                     ? "bg-stone-700 text-white font-medium"
-                    : "text-stone-400 hover:text-stone-600 hover:bg-stone-100"
+                    : "text-stone-400 hover:text-stone-600 hover:bg-[#EDE8DF]"
                 }`}
               >
                 {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -403,23 +474,54 @@ export default function Home() {
 
       {/* Content */}
       <div className="max-w-6xl mx-auto px-5 py-8">
-        {loading && (
-          <div className="flex flex-col items-center justify-center py-32 gap-5">
-            <div className="w-10 h-10 border-2 border-stone-300 border-t-stone-800 rounded-full animate-spin" />
-            <p className="text-stone-400 text-sm font-light tracking-wide">Curating your picks...</p>
-          </div>
-        )}
 
-        {error && (
-          <div className="bg-white border border-stone-200 rounded-2xl p-8 text-center max-w-md mx-auto shadow-sm">
-            <p className="text-stone-800 font-medium">Something went wrong</p>
-            <p className="text-stone-400 text-sm mt-1.5">{error}</p>
-            <p className="text-stone-300 text-xs mt-4">Ask Claude to &quot;refresh my picks&quot; to generate products</p>
+        {/* Loading state */}
+        {loading && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-5 h-5 border-2 border-[#E8E2D8] border-t-stone-800 rounded-full animate-spin" />
+              <p className="text-stone-400 text-sm font-light tracking-wide">
+                Loading your picks...
+              </p>
+            </div>
+            {tab === "basics" && (
+              <div className="space-y-10">
+                {["Tops", "Blazers", "Pants"].map((label) => (
+                  <div key={label}>
+                    <div className="h-5 bg-stone-100 rounded w-40 mb-3 animate-pulse" />
+                    <SkeletonGrid count={4} />
+                  </div>
+                ))}
+              </div>
+            )}
+            {tab === "outfits" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-stone-200/60 overflow-hidden animate-pulse">
+                    <div className="px-5 pt-5 pb-3">
+                      <div className="h-5 bg-stone-100 rounded w-48 mb-2" />
+                      <div className="h-3 bg-stone-50 rounded w-32" />
+                    </div>
+                    <div className="flex mx-5 rounded-xl overflow-hidden">
+                      {Array.from({ length: 4 }).map((_, j) => (
+                        <div key={j} className="flex-1 aspect-[3/4] bg-stone-100" />
+                      ))}
+                    </div>
+                    <div className="p-5 space-y-2">
+                      {Array.from({ length: 4 }).map((_, j) => (
+                        <div key={j} className="h-4 bg-stone-50 rounded" />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {tab === "pieces" && <SkeletonGrid count={8} />}
           </div>
         )}
 
         {/* Outfits tab */}
-        {!loading && !error && tab === "outfits" && (
+        {!loading && tab === "outfits" && (
           <>
             {outfits.length === 0 ? (
               <div className="text-center py-32">
@@ -428,7 +530,7 @@ export default function Home() {
             ) : (
               <>
                 <p className="text-stone-400 text-sm mb-8 font-light">
-                  Complete looks styled for your Sport personality and SF weather.
+                  Complete looks styled for your profile.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {outfits.map((outfit) => (
@@ -440,8 +542,8 @@ export default function Home() {
           </>
         )}
 
-        {/* Basics tab — organized by wardrobe sections */}
-        {!loading && !error && tab === "basics" && (
+        {/* Basics / Wardrobe Capsule tab */}
+        {!loading && tab === "basics" && (
           <>
             <div className="mb-8">
               <h2 className="font-serif text-xl text-stone-900">Your Wardrobe Capsule</h2>
@@ -449,64 +551,73 @@ export default function Home() {
                 The essential pieces every wardrobe needs, curated for your style.
               </p>
             </div>
-            <div className="space-y-10">
-              {WARDROBE_SECTIONS.map((section) => {
-                const matches = products.filter(section.match);
-                if (matches.length === 0) return null;
-                const idx = sectionIndex[section.key] ?? 0;
-                const visible = matches.slice(idx, idx + 4);
-                const hasMore = matches.length > 4;
-                return (
-                  <div key={section.key}>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-serif text-lg text-stone-800">{section.label}</h3>
-                      {hasMore && (
-                        <div className="flex gap-1.5">
-                          <button
-                            onClick={() => setSectionIndex((prev) => ({
-                              ...prev,
-                              [section.key]: Math.max((prev[section.key] ?? 0) - 4, 0),
-                            }))}
-                            disabled={idx === 0}
-                            className="w-8 h-8 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm"
-                          >
-                            ←
-                          </button>
-                          <button
-                            onClick={() => setSectionIndex((prev) => ({
-                              ...prev,
-                              [section.key]: Math.min((prev[section.key] ?? 0) + 4, matches.length - 1),
-                            }))}
-                            disabled={idx + 4 >= matches.length}
-                            className="w-8 h-8 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm"
-                          >
-                            →
-                          </button>
-                          <span className="text-xs text-stone-300 self-center ml-1">
-                            {Math.min(idx + 1, matches.length)}–{Math.min(idx + 4, matches.length)} of {matches.length}
-                          </span>
-                        </div>
-                      )}
+            {allCatalogProducts.length === 0 ? (
+              <div className="text-center py-32">
+                <p className="text-stone-400 font-light text-lg">Couldn&apos;t load products right now</p>
+                <p className="text-stone-300 text-sm mt-2">This usually means the product API is temporarily unavailable. Try refreshing the page.</p>
+              </div>
+            ) : (
+              <div className="space-y-10">
+                {WARDROBE_SECTIONS.map((section) => {
+                  const matches = allCatalogProducts
+                    .filter(section.match)
+                    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+                  if (matches.length === 0) return null;
+                  const idx = sectionIndex[section.key] ?? 0;
+                  const visible = matches.slice(idx, idx + 4);
+                  const sectionHasMore = matches.length > 4;
+                  return (
+                    <div key={section.key}>
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-serif text-lg text-stone-800">{section.label}</h3>
+                        {sectionHasMore && (
+                          <div className="flex gap-1.5">
+                            <button
+                              onClick={() => setSectionIndex((prev) => ({
+                                ...prev,
+                                [section.key]: Math.max((prev[section.key] ?? 0) - 4, 0),
+                              }))}
+                              disabled={idx === 0}
+                              className="w-8 h-8 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm"
+                            >
+                              &larr;
+                            </button>
+                            <button
+                              onClick={() => setSectionIndex((prev) => ({
+                                ...prev,
+                                [section.key]: Math.min((prev[section.key] ?? 0) + 4, matches.length - 1),
+                              }))}
+                              disabled={idx + 4 >= matches.length}
+                              className="w-8 h-8 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm"
+                            >
+                              &rarr;
+                            </button>
+                            <span className="text-xs text-stone-300 self-center ml-1">
+                              {Math.min(idx + 1, matches.length)}&ndash;{Math.min(idx + 4, matches.length)} of {matches.length}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {visible.map((product) => (
+                          <ProductCard
+                            key={product.id}
+                            product={product}
+                            onLike={handleLike}
+                            onSkip={handleSkip}
+                          />
+                        ))}
+                      </div>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {visible.map((product) => (
-                        <ProductCard
-                          key={product.id}
-                          product={product}
-                          onLike={handleLike}
-                          onSkip={handleSkip}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </>
         )}
 
         {/* Pieces / Skipped tabs */}
-        {!loading && !error && (tab === "pieces" || tab === "skipped") && (
+        {!loading && (tab === "pieces" || tab === "skipped") && (
           <>
             {displayProducts.length === 0 ? (
               <div className="text-center py-32">
@@ -540,6 +651,26 @@ export default function Home() {
       {/* Cart drawer */}
       {cartOpen && (
         <Cart items={saved} onRemove={handleRemoveFromCart} onClose={() => setCartOpen(false)} />
+      )}
+
+      {/* Profile panel */}
+      {profile && (
+        <ProfilePanel
+          profile={profile}
+          isOpen={profileOpen}
+          onClose={() => setProfileOpen(false)}
+          onProfileUpdate={(updated) => {
+            setProfile(updated);
+          }}
+        />
+      )}
+
+      {/* Auth overlay */}
+      {showAuthOverlay && (
+        <AuthOverlay
+          onClose={() => setShowAuthOverlay(false)}
+          redirectPath="/"
+        />
       )}
     </main>
   );

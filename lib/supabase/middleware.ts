@@ -35,8 +35,10 @@ export async function updateSession(request: NextRequest) {
   const isAuthCallback = request.nextUrl.pathname.startsWith("/auth/callback");
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
   const isLandingPage = request.nextUrl.pathname === "/landing";
+  const isProfilePage = request.nextUrl.pathname === "/profile";
+  const isHomePage = request.nextUrl.pathname === "/";
 
-  if (!user && !isAuthPage && !isAuthCallback && !isApiRoute && !isLandingPage) {
+  if (!user && !isAuthPage && !isAuthCallback && !isApiRoute && !isLandingPage && !isProfilePage && !isHomePage) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

@@ -34,6 +34,11 @@ The 3 dimensions: Temperature (Warm/Cool), Value (Light/Deep), Chroma (Clear/Mut
 
 ## Output Format
 
+From EITHER photo:
+- **Gender presentation**: Determine whether to shop women's or men's clothing based on the person's presentation
+
+## Output Format
+
 Return ONLY valid JSON (no markdown, no code fences):
 {
   "undertone": "description of skin undertone",
@@ -42,6 +47,7 @@ Return ONLY valid JSON (no markdown, no code fences):
   "contrast": "High/Medium/Low — with explanation",
   "bodyProportions": "description of body shape observations",
   "suggestedSeason": "one of the 12 seasons",
+  "gender": "women" or "men",
   "confidence": 0.0-1.0,
   "adaptiveQuestions": [
     {
@@ -56,16 +62,19 @@ Return ONLY valid JSON (no markdown, no code fences):
   ]
 }
 
-Generate 3-5 adaptive questions that would help VALIDATE or REFINE your initial assessment. Choose from these types based on what you're least certain about:
-- Vein test (wrist veins: blue/purple vs green vs mixed)
-- Jewelry test (gold vs silver vs both)
-- White test (pure white vs cream/off-white)
-- Best color experience (which color gets you the most compliments)
-- Worst color experience (which color makes you look tired/washed out)
-- Sun reaction (burn easily vs tan vs both)
-- Best neutral (black vs navy vs brown vs gray)
+Generate 3-5 adaptive questions that help understand the user's COLOR PREFERENCES and EXPERIENCES. The photo analysis handles the technical assessment — these questions should feel natural and easy to answer. Choose from these types:
+- Which color family they reach for most (earth tones, blues, neutrals, jewel tones, pastels)
+- Their go-to neutral for everyday (black, navy, brown, gray, beige/cream)
+- Colors they already own the most of in their closet
+- Colors that make them feel most confident
+- Colors friends or family say look great on them
+- Colors they've tried and felt "off" in
+- Whether they prefer warm-toned or cool-toned outfits (show examples: camel+cream vs gray+navy)
+- Their preference for muted/soft vs bold/saturated colors
 
-Be specific — tailor questions to the edge cases in YOUR analysis. If you're torn between two seasons, ask the question that would differentiate them.`;
+Do NOT ask clinical "look at your veins" or "hold paper to your face" type questions — the photos already tell us that. Ask about preferences, habits, and experiences instead.
+
+IMPORTANT: When asking about color preferences or closet colors, ALWAYS include "Mostly black and white" as one of the options — it's the most common answer and people feel validated seeing it.`;
 
 export const SYNTHESIS_PROMPT = `You are a world-class personal stylist creating a comprehensive style profile. You have:
 
@@ -83,6 +92,7 @@ Synthesize ALL this data into a complete StyleProfile JSON. This profile will be
 Return ONLY valid JSON matching this exact structure (no markdown, no code fences):
 
 {
+  "gender": "women" or "men",
   "colorSeason": "Season Name (English name)",
   "contrast": "Level — description of the user's contrast characteristics",
   "skinUndertone": "Detailed undertone description",
@@ -156,17 +166,23 @@ Return ONLY valid JSON matching this exact structure (no markdown, no code fence
   },
 
   "capsuleWardrobe": {
-    "tops": ["1 white cotton button-down", etc.],
-    "bottoms": ["1 casual neutral pants", etc.],
-    "dresses": ["1 versatile day dress", etc.],
-    "outerwear": ["1 structured blazer", etc.],
-    "shoes": ["2 pairs heels: nude + dark", etc.],
-    "accessories": ["1 good leather belt", etc.]
+    // CRITICAL: Every item MUST specify colors from the user's goodColors palette.
+    // A Soft Summer gets "1 silk blouse in dusty rose", NOT "1 silk blouse".
+    // A True Autumn gets "1 cashmere sweater in mustard", NOT "1 cashmere sweater".
+    // Each category should have 3-6 items with SPECIFIC colors and fabrics.
+    "tops": ["2 cotton tees in [palette neutral] and [palette color]", "1 silk blouse in [palette color]", etc.],
+    "bottoms": ["1 straight-leg jeans in dark wash", "1 tailored trousers in [palette neutral]", etc.],
+    "dresses": ["1 wrap dress in [palette color]", "1 shirt dress in [palette neutral]", etc.],
+    "outerwear": ["1 blazer in [palette neutral]", "1 trench coat in [palette color]", etc.],
+    "shoes": ["1 flats in [palette neutral]", "1 boots in [palette dark]", etc.],
+    "accessories": ["1 leather tote in [palette neutral]", "1 scarf in [palette accent]", etc.]
   },
 
   "outfitFormulas": [
-    // 10-15 complete outfit formulas using the profile's style
-    "Item + Item + Item + Shoes (Style description)"
+    // 10-15 complete outfit formulas using SPECIFIC colors from the palette.
+    // E.g. "Dusty rose silk blouse + navy tailored trousers + nude pointed flats (Polished casual)"
+    // NOT generic "Blouse + trousers + flats"
+    "Colored Item + Colored Item + Shoes (Style description)"
   ],
 
   "sizes": {
@@ -197,8 +213,10 @@ The scoringGuidance field must include a detailed rubric like this:
 ## Important Rules
 
 - Be SPECIFIC with color names — not just "blue" but "dusty teal", "storm blue", "steel blue"
-- Tailor the capsule wardrobe to the user's style archetype and climate
-- Outfit formulas should use the user's preferred style + their color palette
+- CRITICAL: The capsuleWardrobe and outfitFormulas MUST be deeply personalized to the color season. A True Summer wardrobe should look completely different from a True Autumn wardrobe. Every item should specify colors from the user's palette — "1 silk blouse in dusty rose" not "1 silk blouse".
+- Two users with different color seasons should NEVER get similar wardrobe or outfit recommendations
+- Tailor the capsule wardrobe to the user's style archetype, climate, AND color palette
+- Outfit formulas should reference specific colors: "Slate blue cashmere crew + dark wash jeans + cream ankle boots" not "Sweater + jeans + boots"
 - Body rules should be specific to the detected body shape
 - If the user provided a moodboard, incorporate its aesthetic direction
 - Use the user's "3 words" and "favorite outfit" to calibrate the style personality
@@ -208,50 +226,53 @@ The scoringGuidance field must include a detailed rubric like this:
 // Fallback adaptive questions if photo analysis fails
 export const FALLBACK_ADAPTIVE_QUESTIONS = [
   {
-    id: "vein_test",
-    question: "Look at the veins on the inside of your wrist in natural light. What color do they appear?",
+    id: "closet_colors",
+    question: "Open your closet — what color family dominates?",
     options: [
-      { label: "Blue or purple", value: "cool" },
-      { label: "Green or olive", value: "warm" },
-      { label: "A mix of both", value: "neutral" },
+      { label: "Mostly black and white", value: "bw" },
+      { label: "Neutrals: gray, navy, beige", value: "neutrals" },
+      { label: "Earth tones: brown, olive, camel, rust", value: "earth" },
+      { label: "Soft colors: dusty pink, sage, lavender", value: "muted" },
+      { label: "I don't know — that's why I'm here!", value: "unsure" },
     ],
   },
   {
-    id: "jewelry_test",
-    question: "Which metal jewelry looks best on you?",
+    id: "go_to_neutral",
+    question: "When you need a safe, everyday base — what do you reach for?",
     options: [
-      { label: "Silver or platinum", value: "cool" },
-      { label: "Gold", value: "warm" },
-      { label: "Rose gold or both look good", value: "neutral" },
+      { label: "Black", value: "black" },
+      { label: "Navy blue", value: "navy" },
+      { label: "Gray or charcoal", value: "gray" },
+      { label: "Beige, cream, or brown", value: "warm-neutral" },
     ],
   },
   {
-    id: "white_test",
-    question: "Hold a pure white paper next to your face. How does your skin look?",
-    options: [
-      { label: "My skin looks fine — bright white suits me", value: "cool" },
-      { label: "I look washed out — cream or off-white is better", value: "warm" },
-      { label: "It's hard to tell a difference", value: "neutral" },
-    ],
-  },
-  {
-    id: "best_color",
-    question: "Which color family gets you the most compliments?",
+    id: "confident_color",
+    question: "Which colors make you feel most confident?",
     options: [
       { label: "Soft pinks, lavenders, dusty blues", value: "cool-muted" },
       { label: "Earth tones: olive, camel, rust, terracotta", value: "warm-muted" },
-      { label: "Bold colors: red, cobalt, emerald", value: "bright" },
-      { label: "Pastels: mint, peach, baby blue", value: "light" },
+      { label: "Rich jewel tones: burgundy, emerald, sapphire", value: "deep" },
+      { label: "Light pastels: mint, peach, baby blue", value: "light" },
     ],
   },
   {
-    id: "sun_reaction",
-    question: "How does your skin react to sun exposure?",
+    id: "color_intensity",
+    question: "Do you prefer soft, muted tones or bold, saturated ones?",
     options: [
-      { label: "I burn easily and rarely tan", value: "light-cool" },
-      { label: "I tan gradually without burning much", value: "warm" },
-      { label: "I tan easily and deeply", value: "deep-warm" },
-      { label: "I burn first, then tan", value: "neutral" },
+      { label: "Soft and muted — I like things subtle", value: "muted" },
+      { label: "Bold and saturated — I like to stand out", value: "bright" },
+      { label: "Somewhere in between", value: "medium" },
+    ],
+  },
+  {
+    id: "off_color",
+    question: "Is there a color you've tried wearing and felt \"off\" in?",
+    options: [
+      { label: "Yellow, orange, or mustard", value: "avoid-warm" },
+      { label: "Pastel pink or baby blue", value: "avoid-light" },
+      { label: "Bright neon or electric colors", value: "avoid-bright" },
+      { label: "Not really — most colors work for me", value: "flexible" },
     ],
   },
 ];

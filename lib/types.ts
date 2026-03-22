@@ -31,6 +31,8 @@ export interface Outfit {
 // --- Style Profile Types ---
 
 export interface StyleProfile {
+  firstName?: string;
+  gender?: "women" | "men";
   colorSeason: string;
   contrast: string;
   skinUndertone: string;
@@ -63,6 +65,7 @@ export interface StyleProfile {
   capsuleWardrobe: Record<string, string[]>;
   outfitFormulas: string[];
   sizes: Record<string, string[]>;
+  preferredBrands?: string[];
   location: string;
   climate: string;
   seasonalNotes: string[];
@@ -78,6 +81,7 @@ export interface PhotoAnalysisResult {
   contrast: string;
   bodyProportions: string;
   suggestedSeason: string;
+  gender: "women" | "men";
   confidence: number;
   adaptiveQuestions: AdaptiveQuestion[];
 }
@@ -89,10 +93,12 @@ export interface AdaptiveQuestion {
 }
 
 export interface ProfileWizardData {
+  firstName?: string;
   selfieBase64?: string;
   bodyPhotoBase64?: string;
   heightCm?: number;
   location?: string;
+  preferredBrands?: string[];
   photoAnalysis?: PhotoAnalysisResult;
   colorQuizAnswers: Record<string, string>;
   styleQuizAnswers: Record<string, string | string[]>;

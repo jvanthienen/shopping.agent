@@ -263,10 +263,10 @@ export default function PhotoUpload({ initialData, onComplete }: PhotoUploadProp
           <div
             className={`relative aspect-[3/4] rounded-2xl border-2 border-dashed transition-colors overflow-hidden ${
               dragOver === "selfie"
-                ? "border-stone-500 bg-stone-100"
+                ? "border-stone-500 bg-[#EDE8DF]"
                 : selfie
                 ? "border-transparent"
-                : "border-stone-300 bg-white"
+                : "border-[#DDD7CC] bg-white/80"
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragOver("selfie"); }}
             onDragLeave={() => setDragOver(null)}
@@ -326,10 +326,10 @@ export default function PhotoUpload({ initialData, onComplete }: PhotoUploadProp
           <div
             className={`relative aspect-[3/4] rounded-2xl border-2 border-dashed transition-colors overflow-hidden ${
               dragOver === "body"
-                ? "border-stone-500 bg-stone-100"
+                ? "border-stone-500 bg-[#EDE8DF]"
                 : bodyPhoto
                 ? "border-transparent"
-                : "border-stone-300 bg-white"
+                : "border-[#DDD7CC] bg-white/80"
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragOver("body"); }}
             onDragLeave={() => setDragOver(null)}
@@ -417,7 +417,8 @@ export default function PhotoUpload({ initialData, onComplete }: PhotoUploadProp
 
         {/* Location */}
         <div className="mb-10">
-          <label className="block text-sm font-medium text-stone-600 mb-2">Where do you live? (optional)</label>
+          <label className="block text-sm font-medium text-stone-600 mb-1.5">Where do you live?</label>
+          <p className="text-stone-400 text-xs mb-2">So we can recommend pieces for your season and climate</p>
           <input
             type="text"
             value={location}

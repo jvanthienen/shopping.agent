@@ -1,6 +1,20 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
+
+// Brands with live search integration
+export const SUPPORTED_BRANDS = [
+  "Zara",
+  "Uniqlo",
+  "Quince",
+  "Anthropologie",
+  "H&M",
+  "Everlane",
+  "COS",
+  "ASOS",
+] as const;
+
+const SUPPORTED_SET = new Set(SUPPORTED_BRANDS.map((b) => b.toLowerCase()));
 
 interface StyleQuizProps {
   initialAnswers: Record<string, string | string[]>;
@@ -47,8 +61,8 @@ const QUESTIONS: QuestionDef[] = [
   },
   {
     id: "style_archetype",
-    question: "Which style family resonates with you most?",
-    type: "single",
+    question: "Which style families resonate with you? (pick 2)",
+    type: "multi",
     options: [
       "Sport — comfort + sensuality, casual-elevated",
       "Romantic — soft, feminine, flowing",
@@ -100,13 +114,19 @@ const QUESTIONS: QuestionDef[] = [
     type: "text-3",
   },
   {
+    id: "preferred_brands",
+    question: "Which stores do you shop at? (pick all that apply)",
+    type: "multi",
+    options: [...SUPPORTED_BRANDS],
+  },
+  {
     id: "sizes",
     question: "What are your sizes?",
     type: "sizes",
   },
 ];
 
-const SIZE_CATEGORIES = [
+export const SIZE_CATEGORIES = [
   { key: "tops", label: "Tops", options: ["XXS", "XS", "S", "M", "L", "XL"] },
   { key: "jeans", label: "Jeans", options: ["24", "25", "26", "27", "28", "29", "30", "31", "32"] },
   { key: "pants", label: "Pants", options: ["0", "2", "4", "6", "8", "10", "12"] },
@@ -127,6 +147,8 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
   const [sizes, setSizes] = useState<Record<string, string[]>>(initialSizes);
   const [textValue, setTextValue] = useState("");
   const [text3Values, setText3Values] = useState<[string, string, string]>(["", "", ""]);
+  const [customBrand, setCustomBrand] = useState("");
+  const [customBrandNote, setCustomBrandNote] = useState("");
 
   const goBack = useCallback(() => {
     if (currentIdx > 0) {
@@ -150,7 +172,11 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
     }
   }, [currentIdx, answers, sizes, onComplete]);
 
+  const lastSelectTime = useRef(0);
+
   const handleSingleSelect = (value: string) => {
+    if (Date.now() - lastSelectTime.current < 500) return;
+    lastSelectTime.current = Date.now();
     setAnswers((prev) => ({ ...prev, [question.id]: value }));
     setTimeout(advance, 300);
   };
@@ -163,6 +189,35 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
         : [...current, value];
       return { ...prev, [question.id]: updated };
     });
+  };
+
+  const handleAddCustomBrand = () => {
+    const trimmed = customBrand.trim();
+    if (!trimmed) return;
+    // Extract brand name from URL or use as-is
+    let brandName = trimmed;
+    try {
+      const url = new URL(trimmed.startsWith("http") ? trimmed : `https://${trimmed}`);
+      brandName = url.hostname.replace(/^www\./, "").split(".")[0];
+      // Capitalize first letter
+      brandName = brandName.charAt(0).toUpperCase() + brandName.slice(1);
+    } catch {
+      // Not a URL, use as brand name directly
+    }
+    setAnswers((prev) => {
+      const current = (prev["preferred_brands"] as string[]) ?? [];
+      if (current.includes(brandName)) return prev;
+      return { ...prev, preferred_brands: [...current, brandName] };
+    });
+    setCustomBrand("");
+
+    // Show note if brand isn't in the supported list
+    if (!SUPPORTED_SET.has(brandName.toLowerCase())) {
+      setCustomBrandNote(`${brandName} saved! We'll integrate it soon — for now, we'll show you picks from our current stores.`);
+      setTimeout(() => setCustomBrandNote(""), 5000);
+    } else {
+      setCustomBrandNote("");
+    }
   };
 
   const handleSizeToggle = (category: string, size: string) => {
@@ -213,7 +268,7 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
           <div
             key={i}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === currentIdx ? "w-8 bg-stone-700" : i < currentIdx ? "w-4 bg-stone-400" : "w-4 bg-stone-200"
+              i === currentIdx ? "w-8 bg-stone-700" : i < currentIdx ? "w-4 bg-stone-400" : "w-4 bg-[#E8E2D8]"
             }`}
           />
         ))}
@@ -249,7 +304,7 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
         {/* Multi select */}
         {question.type === "multi" && (
           <>
-            <div className="flex flex-wrap gap-2 justify-center mb-8">
+            <div className="flex flex-wrap gap-2 justify-center mb-4">
               {question.options!.map((option) => {
                 const isSelected = multiSelected.includes(option);
                 return (
@@ -266,7 +321,55 @@ export default function StyleQuiz({ initialAnswers, initialSizes, onComplete, on
                   </button>
                 );
               })}
+              {/* Show custom brands that were added */}
+              {question.id === "preferred_brands" &&
+                multiSelected
+                  .filter((b) => !question.options!.includes(b))
+                  .map((b) => (
+                    <button
+                      key={b}
+                      onClick={() => handleMultiToggle(b)}
+                      className="px-4 py-2.5 rounded-full text-sm font-medium border-2 border-stone-700 bg-stone-800 text-white transition-all"
+                    >
+                      {b}
+                    </button>
+                  ))}
             </div>
+
+            {/* Custom brand input */}
+            {question.id === "preferred_brands" && (
+              <div className="mb-6 space-y-2">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={customBrand}
+                    onChange={(e) => setCustomBrand(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleAddCustomBrand(); }}
+                    placeholder="Add another store..."
+                    className="flex-1 px-4 py-2.5 bg-white border border-stone-200 rounded-xl text-stone-800 text-sm focus:outline-none focus:border-stone-400 transition-colors"
+                  />
+                  <button
+                    onClick={handleAddCustomBrand}
+                    disabled={!customBrand.trim()}
+                    className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                      customBrand.trim()
+                        ? "bg-stone-900 text-white hover:bg-stone-800"
+                        : "bg-stone-200 text-stone-400 cursor-not-allowed"
+                    }`}
+                  >
+                    Add
+                  </button>
+                </div>
+                {customBrandNote && (
+                  <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
+                    {customBrandNote}
+                  </p>
+                )}
+                <p className="text-xs text-stone-400 mt-1">More brands coming soon — request yours above</p>
+              </div>
+            )}
+
+            {!question.id.startsWith("preferred_brands") && <div className="mb-4" />}
             {hasMultiSelection && (
               <button
                 onClick={advance}

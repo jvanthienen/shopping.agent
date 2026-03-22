@@ -34,6 +34,13 @@ export default function ProductCard({ product, onLike, onSkip, skipLabel }: Prop
 
 
 
+        {/* Great match badge */}
+        {product.isGreatMatch && (
+          <span className="absolute top-2.5 left-2.5 text-[10px] font-semibold uppercase tracking-wider bg-emerald-600/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-full">
+            Great match
+          </span>
+        )}
+
         {/* Brand pill */}
         {product.brand && (
           <span className="absolute top-2.5 right-2.5 text-[10px] font-semibold uppercase tracking-wider bg-white/85 backdrop-blur-sm text-stone-600 px-2 py-0.5 rounded-full">
@@ -46,21 +53,30 @@ export default function ProductCard({ product, onLike, onSkip, skipLabel }: Prop
       <div className="p-3.5 flex flex-col flex-1 h-[180px]">
         <p className="text-[11px] text-stone-400 uppercase tracking-wider">{product.category}</p>
         <h3 className="text-sm font-medium text-stone-800 leading-snug line-clamp-2 mt-1">{product.name}</h3>
-        {(product.color || product.selectedSize) && (
-          <p className="text-xs text-stone-400 mt-0.5">
-            {product.color}
-            {product.color && product.selectedSize && " · "}
-            {product.selectedSize && (
-              <span className="text-stone-500 font-medium">Size {product.selectedSize}</span>
+        {(product.color || product.selectedSize || product.matchReason) && (
+          <div className="mt-0.5 space-y-0.5">
+            {(product.color || product.selectedSize) && (
+              <p className="text-xs text-stone-400">
+                {product.color}
+                {product.color && product.selectedSize && " · "}
+                {product.selectedSize && (
+                  <span className="text-stone-500 font-medium">Size {product.selectedSize}</span>
+                )}
+                {product.selectedSize &&
+                  product.availableSizes &&
+                  !product.availableSizes.some(
+                    (s) => s.name === product.selectedSize && s.inStock
+                  ) && (
+                    <span className="text-amber-500 text-[10px] ml-1">(check stock)</span>
+                  )}
+              </p>
             )}
-            {product.selectedSize &&
-              product.availableSizes &&
-              !product.availableSizes.some(
-                (s) => s.name === product.selectedSize && s.inStock
-              ) && (
-                <span className="text-amber-500 text-[10px] ml-1">(check stock)</span>
-              )}
-          </p>
+            {product.matchReason && product.matchReason !== "General wardrobe piece" && (
+              <p className="text-[10px] text-emerald-600 leading-tight line-clamp-2">
+                {product.matchReason}
+              </p>
+            )}
+          </div>
         )}
         <p className="text-stone-900 font-semibold text-[15px] mt-auto">{product.price}</p>
 
