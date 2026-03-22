@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+// All pages use Supabase client — skip static prerendering
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Your Personal Shopper",
   description: "AI-curated picks styled for your Soft Summer palette",
