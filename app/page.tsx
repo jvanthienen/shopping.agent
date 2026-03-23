@@ -13,6 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 import ProfilePanel from "@/components/ProfilePanel";
 import AuthOverlay from "@/components/AuthOverlay";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Tab = "outfits" | "basics" | "pieces" | "skipped";
 const CATEGORIES = ["all", "outerwear", "blazers", "blouses", "dresses", "jeans", "pants", "skirts", "shoes", "accessories"] as const;
@@ -70,6 +71,8 @@ const WARDROBE_SECTIONS = [
 ] as const;
 
 export default function Home() {
+  const router = useRouter();
+
   // Products from static catalog
   const [allCatalogProducts, setAllCatalogProducts] = useState<Product[]>([]);
   const [outfits, setOutfits] = useState<Outfit[]>([]);
@@ -95,15 +98,19 @@ export default function Home() {
   // --- Auth check ---
 
   useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setIsAuthenticated(!!user);
-    });
+    try {
+      const supabase = createClient();
+      supabase.auth.getUser().then(({ data }: { data: { user: unknown } }) => {
+        setIsAuthenticated(!!data.user);
+      }).catch(() => setIsAuthenticated(false));
+    } catch {
+      setIsAuthenticated(false);
+    }
   }, []);
 
   const showAuthBanner = isAuthenticated === false && !authBannerDismissed;
 
-  // --- Profile loading ---
+  // --- Profile loading (redirect to landing if no profile) ---
 
   useEffect(() => {
     if (hasStyleProfile()) {
@@ -111,8 +118,15 @@ export default function Home() {
       setProfile(getStyleProfile());
     } else {
       loadStyleProfileFromSupabase().then((loaded) => {
-        setProfileExists(!!loaded);
-        if (loaded) setProfile(loaded);
+        if (loaded) {
+          setProfileExists(true);
+          setProfile(loaded);
+        } else {
+          // No profile found — send to landing page
+          router.push("/landing");
+        }
+      }).catch(() => {
+        router.push("/landing");
       });
     }
   }, []);
