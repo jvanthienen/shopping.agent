@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { PHOTO_ANALYSIS_PROMPT, SYNTHESIS_PROMPT, FALLBACK_ADAPTIVE_QUESTIONS } from "@/lib/prompts";
 
+// Allow up to 60 seconds for AI model calls (photo analysis + profile synthesis)
+export const maxDuration = 60;
+
 const anthropic = new Anthropic();
 
 export async function POST(req: NextRequest) {
