@@ -254,9 +254,28 @@ export default function PhotoUpload({ initialData, onComplete }: PhotoUploadProp
 
       <div className="max-w-lg mx-auto px-5 py-16">
         <h2 className="font-serif text-3xl text-stone-900 text-center mb-2">Your Photos</h2>
-        <p className="text-stone-400 text-sm text-center mb-10">
+        <p className="text-stone-400 text-sm text-center mb-4">
           Take a face selfie and a full-body photo in natural light.
         </p>
+
+        {/* Photo tips */}
+        <div className="bg-white/60 border border-stone-200 rounded-xl px-4 py-3 mb-4 text-xs text-stone-500 space-y-1.5">
+          <p className="font-medium text-stone-600">Tips for best results:</p>
+          <ul className="list-disc list-inside space-y-0.5">
+            <li>Use natural light — stand near a window or go outside</li>
+            <li>For the selfie, keep your face clearly visible, no sunglasses</li>
+            <li>For the full body photo, wear form-fitting clothes (leggings, a fitted top, or swimwear) so we can see your shape</li>
+            <li>Stand straight, feet together, arms slightly away from your body</li>
+          </ul>
+        </div>
+
+        <div className="flex items-center gap-1.5 justify-center mb-8">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-stone-400">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <span className="text-[11px] text-stone-400">Your photos are analyzed once and never stored on our servers.</span>
+        </div>
 
         <div className="grid grid-cols-2 gap-4 mb-8">
           {/* Selfie */}
@@ -355,21 +374,20 @@ export default function PhotoUpload({ initialData, onComplete }: PhotoUploadProp
                 <span className="text-stone-500 text-sm font-medium">Full body</span>
                 <div className="flex flex-col gap-2 w-full px-2 mt-1">
                   <button
-                    onClick={() => openFilePicker("body")}
+                    onClick={() => openCamera("body")}
                     className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-stone-900 text-white text-xs font-medium hover:bg-stone-800 active:scale-[0.97] transition-all"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
                     </svg>
-                    Upload photo
+                    Take photo
                   </button>
                   <button
-                    onClick={() => openCamera("body")}
+                    onClick={() => openFilePicker("body")}
                     className="w-full py-2 rounded-lg border border-stone-200 text-stone-500 text-xs font-medium hover:bg-stone-50 active:scale-[0.97] transition-all"
                   >
-                    Take photo instead
+                    Upload from files
                   </button>
                 </div>
               </div>
